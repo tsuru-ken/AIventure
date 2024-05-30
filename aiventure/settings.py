@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'partners.apps.PartnersConfig',
-    'image_generation.apps.Image_generationConfig',
+    'image_generation.apps.ImageGenerationConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,4 +126,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL ='users.CustomUser'
+# Custom user model
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
