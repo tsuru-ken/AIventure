@@ -1,7 +1,15 @@
-from django.db import models
+from django.urls import path
 
-from django.contrib.auth.models import AbstractUser
 
-class CustomUser(AbstractUser):
-    '''Userモデルを継承したカスタムユーザーモデル'''
-    pass
+from . import views
+
+app_name = 'users'
+
+
+urlpatterns = [
+    
+    
+    path('', views.IndexView.as_view(),name = 'index'),
+    
+]
+
