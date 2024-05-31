@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Models{% endblock %}
+
+{% block contents %}
+<h1>AI Models</h1>
+<ul>
+    {% for ai_model in ai_models %}
+    <li>{{ ai_model.user.username }} - {{ ai_model.image_generation.title }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
