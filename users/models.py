@@ -5,3 +5,4 @@ class CustomUser(AbstractUser):
     # 追加のフィールドをここに定義することもできます
     pass
 
+

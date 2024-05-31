@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'partners.apps.PartnersConfig',
     'image_generation.apps.ImageGenerationConfig',
+    'ai_models.apps.AiModelsConfig'
 ]
 
 MIDDLEWARE = [
