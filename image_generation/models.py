@@ -2,7 +2,7 @@ from django.db import models
 
 from users.models import CustomUser
 
-class ImageGenerration(models.Model):
+class ImageGeneration(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='image_generation')
     title = models.CharField(max_length=255)
     description = models.TextField()
