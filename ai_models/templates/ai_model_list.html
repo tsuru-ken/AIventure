@@ -1,12 +1,39 @@
 {% extends 'base.html' %}
 
-{% block title %}AI Models{% endblock %}
+{% block title %}AI Model List{% endblock %}
 
 {% block contents %}
-<h1>AI Models</h1>
-<ul>
-    {% for ai_model in ai_models %}
-    <li>{{ ai_model.user.username }} - {{ ai_model.image_generation.title }}</li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h1>AI Model List</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Image Generation</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ai_model in ai_models %}
+            <tr>
+                <td>{{ ai_model.user.username }}</td>
+                <td>{{ ai_model.image_generation.title }}</td>
+                <td>{{ ai_model.created_at }}</td>
+                <td>{{ ai_model.updated_at }}</td>
+                <td>
+                    <a href="{% url 'ai_models:ai_model_detail' ai_model.pk %}" class="btn btn-info btn-sm">View</a>
+                    <a href="{% url 'ai_models:ai_model_update' ai_model.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{% url 'ai_models:ai_model_delete' ai_model.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'ai_models:ai_model_create' %}" class="btn btn-success">Create New AI Model</a>
+    <a href="{% url 'ai_models:ai_model_index' %}" class="btn btn-secondary mt-3">Back to AI Model Index</a>
+</div>
 {% endblock %}
+
+

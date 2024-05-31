@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Model Detail{% endblock %}
+
+{% block contents %}
+<h1>AI Model Detail</h1>
+<p>User: {{ ai_model.user.username }}</p>
+<p>Image Generation Title: {{ ai_model.image_generation.title }}</p>
+<p>Created At: {{ ai_model.created_at }}</p>
+<p>Updated At: {{ ai_model.updated_at }}</p>
+<a href="{% url 'ai_models:ai_model_list' %}">Back to list</a>
+{% endblock %}
