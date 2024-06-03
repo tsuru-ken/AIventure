@@ -23,11 +23,13 @@ class ImageGenerationView(TemplateView):
     template_name = 'image_generation.html'
     context_object_name = 'image_generation'
 
-class ImageGenerationDetailVieView(TemplateView):
+class ImageGenerationDetailView(TemplateView):
     model = ImageGeneration
     template_name = 'image_generation.html'
     context_object_name = 'image_generation'
 
+def index(request):
+    return render(request, 'index.html')
 
 # generate_image関数
 def generate_image(request):
@@ -45,11 +47,13 @@ def generate_image(request):
 
         # request.postを使用してAPIリクエストを送信し、レスポンスをJSONとして解析
         response = requests.post(api_url, headers=headers, data=payload)
-        response_data = response.jason()
-        
+        response_data = response.json()
+
         # APIリクエsつろとレスポンスの内容をサーバーのコンソールに出力
         print('API Request:', payload)
         print('Response:', response_data)
-        
+
         # 画像生成APIから受け取ったレスポンスデータをそのままJSON形式でクライアントに返す
         return JsonResponse(response_data)
+    else:
+        return render(request, 'index/index.html')

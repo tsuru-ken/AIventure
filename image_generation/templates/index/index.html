@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generator</title>
+</head>
+<body>
+    <h1>Image Generator</h1>
+    <form id="image-form" method="post" action="{% url 'image_generation:generate_image' %}">
+        {% csrf_token %}
+        <label for="input-text">Enter a prompt</label>
+        <input type="text" id="input-text" name="input-text" required>
+        <button type="submit">Generate Image</button>
+    </form>
+    {% comment %} 画像生成領域 {% endcomment %}
+    <div id="image-result">
+        <h2>Generated Image</h2>
+        {% comment %} 生成された画像を表示するためのイメージタグ {% endcomment %}
+        <img id="generated-image" src="" alt="Generated Image" style="display: none">
+    </div>
+
+    {% comment %} JS部分 {% endcomment %}
+    <script>
+        document.getElementById('image-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const inputText = document.getElementById('input-text').value;
+            const form = event.target;
+            const actionUrl = form.action;
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const response = await fetch(actionUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({input_text: inputText})
+            });
+
+            const data = await response.json();
+            console.log('API Response:', data);  // レスポンスをログに出力
+
+            // 全体のレスポンスデータをチェック
+            if (data && data.body) {
+                console.log('Response Body:', data.body);  // レスポンスボディをログに出力
+            }
+
+            // presigned_urlを直接取得
+            if (data.body && data.body.presigned_url) {
+                const imageUrl = data.body.presigned_url;
+                document.getElementById('generated-image').src = imageUrl;
+                document.getElementById('generated-image').style.display = 'block';
+            } else {
+                console.error('Image URL not found in response:', data);
+            }
+        });
+    </script>
+</body>
+</html>
