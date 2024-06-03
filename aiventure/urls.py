@@ -26,5 +26,6 @@ urlpatterns = [
     path('image_generation/',include('image_generation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('ai_models/',include('ai_models.urls')),
+    
 ]
 
