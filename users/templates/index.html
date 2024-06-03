@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOP Page</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}TOP Page{% endblock %}
+
+{% block contents %}
     <h1>Welcome to the TOP Page</h1>
     <p>This is the home page of your application.</p>
     <nav>
         <ul>
-            <li><a href="{% url 'users:signup' %}">Sign Up</a></li> <!-- 名前空間を指定 -->
-            <li><a href="{% url 'users:signup_success' %}">Sign Up Success</a></li> <!-- 名前空間を指定 -->
+            <li><a href="{% url 'users:signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'users:signup_success' %}">Sign Up Success</a></li>
         </ul>
     </nav>
-</body>
-</html>
+{% endblock %}
+
