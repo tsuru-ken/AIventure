@@ -4,16 +4,9 @@
 
 {% block contents %}
 <div class="container mt-5">
-    <h1>AI Model List</h1>
+    <h1>AI Model を編集</h1>
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th>User</th>
-                <th>Image Generation</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
-            </tr>
         </thead>
         <tbody>
             {% for ai_model in ai_models %}
@@ -31,8 +24,8 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'ai_models:ai_model_create' %}" class="btn btn-success">Create New AI Model</a>
-    <a href="{% url 'ai_models:ai_model_index' %}" class="btn btn-secondary mt-3">Back to AI Model Index</a>
+    <a href="{% url 'ai_models:ai_model_create' %}" class="btn btn-success">AIモデルを作成</a>
+    <a href="{% url 'ai_models:ai_model_index' %}" class="btn btn-secondary mt-3">AIモデル一覧に戻る</a>
 </div>
 {% endblock %}
 
