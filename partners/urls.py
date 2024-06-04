@@ -5,5 +5,6 @@ app_name = 'partners'
 
 
 urlpatterns = [
-    # path('',views.IndexView.as_view(), name='index'),
+    path('',views.IndexView.as_view(), name='index'),
 ]
+
