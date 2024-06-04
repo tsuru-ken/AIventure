@@ -10,77 +10,87 @@
             <div class="card mb-4">
                 <div class="card-header">生成AI</div>
                 <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>各AIモデル</option>
+                    <select class="form-select mb-3 ai-model-select">
+                        <option selected disabled value="">各AIモデルを選択</option>
                         {% for ai_model in ai_models %}
                         <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
                         {% endfor %}
                     </select>
-                    <a href="#" class="btn btn-primary w-100">試す</a>
+                    <button class="btn btn-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="display:none;">
+                        生成AIの種類を選択
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#" data-ai-type="image">画像生成AI</a></li>
+                        <li><a class="dropdown-item" href="#" data-ai-type="text">文字生成AI</a></li>
+                        <li><a class="dropdown-item" href="#" data-ai-type="audio">音声生成AI</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <!-- 他のカテゴリも同様に追加 -->
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header">画像処理</div>
                 <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>各AIモデル</option>
+                    <select class="form-select mb-3 ai-model-select">
+                        <option selected disabled value="">各AIモデルを選択</option>
                         {% for ai_model in ai_models %}
                         <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
                         {% endfor %}
                     </select>
-                    <a href="#" class="btn btn-primary w-100">試す</a>
+                    <button class="btn btn-primary w-100 generate-image-button" style="display:none;">画像生成</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-header">自然言語処理</div>
-                <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>各AIモデル</option>
-                        {% for ai_model in ai_models %}
-                        <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
-                        {% endfor %}
-                    </select>
-                    <a href="#" class="btn btn-primary w-100">試す</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-header">異音検知</div>
-                <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>各AIモデル</option>
-                        {% for ai_model in ai_models %}
-                        <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
-                        {% endfor %}
-                    </select>
-                    <a href="#" class="btn btn-primary w-100">試す</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-header">時系列解析</div>
-                <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>各AIモデル</option>
-                        {% for ai_model in ai_models %}
-                        <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
-                        {% endfor %}
-                    </select>
-                    <a href="#" class="btn btn-primary w-100">試す</a>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-12 text-center">
-                    <a href="{% url 'ai_models:ai_model_list' %}" class="btn btn-success">AI Model を編集</a>
-                </div>
-            </div>
-        </div>
+        <!-- 他のカテゴリも同様に追加 -->
     </div>
+    <p id="debugMessage">JavaScriptが実行されています</p>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("JavaScriptが実行されています");
+
+        var aiModelSelects = document.querySelectorAll('.ai-model-select');
+        var dropdownButtons = document.querySelectorAll('.dropdown-toggle');
+        var dropdownMenus = document.querySelectorAll('.dropdown-menu');
+
+        console.log("aiModelSelects:", aiModelSelects);
+        console.log("dropdownButtons:", dropdownButtons);
+        console.log("dropdownMenus:", dropdownMenus);
+
+        aiModelSelects.forEach(function(select, index) {
+            console.log("Select element:", select);
+
+            select.addEventListener('change', function() {
+                console.log("Select changed:", select.value);
+                alert("Select changed: " + select.value);
+                dropdownButtons[index].style.display = 'block';
+            });
+        });
+
+        dropdownMenus.forEach(function(menu, index) {
+            menu.querySelectorAll('.dropdown-item').forEach(function(item) {
+                item.addEventListener('click', function(event) {
+                    var aiType = this.getAttribute('data-ai-type');
+                    var selectedModelId = aiModelSelects[index].value;
+                    console.log("Dropdown item clicked, aiType:", aiType, "selectedModelId:", selectedModelId);
+                    alert("Dropdown item clicked, aiType: " + aiType + " selectedModelId: " + selectedModelId);
+                    if (aiType === 'image') {
+                        var url = "{% url 'image_generation:generate_image' %}?model=" + selectedModelId;
+                        window.location.href = url;
+                    } else {
+                        alert("この機能はまだ実装されていません");
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}
+
+
+
+
+
+
