@@ -35,6 +35,8 @@ class AIModelDeleteView(DeleteView):
     model = AIModel
     template_name = 'ai_model_confirm_delete.html'
     success_url = reverse_lazy('ai_models:ai_model_list')
+    
+
 
 
 
