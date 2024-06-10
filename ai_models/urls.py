@@ -10,4 +10,5 @@ urlpatterns = [
     path('create/', AIModelCreateView.as_view(), name='ai_model_create'),
     path('<int:pk>/update/', AIModelUpdateView.as_view(), name='ai_model_update'),
     path('<int:pk>/delete/', AIModelDeleteView.as_view(), name='ai_model_delete'),
+    
 ]

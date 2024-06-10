@@ -10,39 +10,68 @@
             <div class="card mb-4">
                 <div class="card-header">生成AI</div>
                 <div class="card-body">
-                    <select class="form-select mb-3 ai-model-select">
-                        <option selected disabled value="">各AIモデルを選択</option>
-                        {% for ai_model in ai_models %}
-                        <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
-                        {% endfor %}
+                    <select class="form-select mb-3 ai-model-select" id="aiModelSelect1">
+                        <option selected disabled value="">AIモデルを選択</option>
+                        <option value="1">画像生成AI</option>
+                        <option value="2">音声生成AI</option>
+                        <option value="3">文字生成AI</option>
                     </select>
-                    <button class="btn btn-primary w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="display:none;">
-                        生成AIの種類を選択
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#" data-ai-type="image">画像生成AI</a></li>
-                        <li><a class="dropdown-item" href="#" data-ai-type="text">文字生成AI</a></li>
-                        <li><a class="dropdown-item" href="#" data-ai-type="audio">音声生成AI</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
-        <!-- 他のカテゴリも同様に追加 -->
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header">画像処理</div>
                 <div class="card-body">
-                    <select class="form-select mb-3 ai-model-select">
-                        <option selected disabled value="">各AIモデルを選択</option>
-                        {% for ai_model in ai_models %}
-                        <option value="{{ ai_model.id }}">{{ ai_model.title }}</option>
-                        {% endfor %}
+                    <select class="form-select mb-3 ai-model-select" id="aiModelSelect2">
+                        <option selected disabled value="">AIモデルを選択</option>
+                        <option value="1">異常検知(Image Generation)</option>
+                        <option value="2">画像分類(Image Classification)</option>
+                        <option value="3">物体検知(Object Detection)</option>
+                        <option value="4">姿勢推定(Pose Estimation)</option>
+                        <option value="5">画像セグメンテーション(Semantic Segmention)</option>
                     </select>
-                    <button class="btn btn-primary w-100 generate-image-button" style="display:none;">画像生成</button>
                 </div>
             </div>
         </div>
-        <!-- 他のカテゴリも同様に追加 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">自然言語処理</div>
+                <div class="card-body">
+                    <select class="form-select mb-3 ai-model-select" id="aiModelSelect3">
+                        <option selected disabled value="">AIモデルを選択</option>
+                        <option value="1">文書分類(Text Classification)</option>
+                        <option value="2">文書要約(Summarize)</option>
+                        <option value="3">質疑応答 1問多答(Questuon Answering)</option>
+                        <option value="4">質疑応答 1問1答(Question Answering Single)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">異音検知</div>
+                <div class="card-body">
+                    <select class="form-select mb-3 ai-model-select" id="aiModelSelect4">
+                        <option selected disabled value="">AIモデルを選択</option>
+                        <option value="1">異音検知(Audio Anomaly Detection)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">時系列解析</div>
+                <div class="card-body">
+                    <select class="form-select mb-3 ai-model-select" id="aiModelSelect5">
+                        <option selected disabled value="">AIモデルを選択</option>
+                        <option value="1">時系列予測 説明変数あり(Timeseries Prediction Multivariate)</option>
+                        <option value="2">時系列予測 説明変数なし(Timeseries Prediction Univariate)</option>
+                        <option value="3">テーブル回帰予測(Timeseries Prediction Tabulars)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
     <p id="debugMessage">JavaScriptが実行されています</p>
 </div>
@@ -52,42 +81,60 @@
         console.log("JavaScriptが実行されています");
 
         var aiModelSelects = document.querySelectorAll('.ai-model-select');
-        var dropdownButtons = document.querySelectorAll('.dropdown-toggle');
-        var dropdownMenus = document.querySelectorAll('.dropdown-menu');
 
         console.log("aiModelSelects:", aiModelSelects);
-        console.log("dropdownButtons:", dropdownButtons);
-        console.log("dropdownMenus:", dropdownMenus);
 
-        aiModelSelects.forEach(function(select, index) {
+        aiModelSelects.forEach(function(select) {
             console.log("Select element:", select);
 
             select.addEventListener('change', function() {
                 console.log("Select changed:", select.value);
-                alert("Select changed: " + select.value);
-                dropdownButtons[index].style.display = 'block';
-            });
-        });
 
-        dropdownMenus.forEach(function(menu, index) {
-            menu.querySelectorAll('.dropdown-item').forEach(function(item) {
-                item.addEventListener('click', function(event) {
-                    var aiType = this.getAttribute('data-ai-type');
-                    var selectedModelId = aiModelSelects[index].value;
-                    console.log("Dropdown item clicked, aiType:", aiType, "selectedModelId:", selectedModelId);
-                    alert("Dropdown item clicked, aiType: " + aiType + " selectedModelId: " + selectedModelId);
-                    if (aiType === 'image') {
-                        var url = "{% url 'image_generation:generate_image' %}?model=" + selectedModelId;
-                        window.location.href = url;
-                    } else {
-                        alert("この機能はまだ実装されていません");
-                    }
-                });
+                var selectedModelId = select.value;
+
+                // 生成AIセクションの画像生成AI (valueが1)が選択された場合のみ遷移
+                if (select.id === "aiModelSelect1" && selectedModelId === "1") {
+                    console.log("Navigating to AI type: image with model ID:", selectedModelId);
+                    var url = "{% url 'image_generation:generate_image' %}?model=" + selectedModelId;
+                    window.location.href = url;
+                } else {
+                    alert("このAIモデルは現在準備中です。");
+                    // 選択を元に戻す
+                    select.selectedIndex = 0;
+                }
             });
         });
     });
 </script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
