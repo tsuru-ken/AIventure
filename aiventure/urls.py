@@ -17,15 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',user_views.IndexView.as_view(), name='index'),
-    path('users/',include('users.urls')),
-    path('partners/',include('partners.urls')),
-    path('image_generation/',include('image_generation.urls')),
+    path('', user_views.IndexView.as_view(), name='index'),
+    path('users/', include('users.urls')),
+    path('partners/', include('partners.urls')),
+    path('image_generation/', include('image_generation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('ai_models/',include('ai_models.urls')),
-    
+    path('ai_models/', include('ai_models.urls')),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

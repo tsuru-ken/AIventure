@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}パートナー会社登録{% endblock %}
+{% block title %}確認画面{% endblock %}
 
 {% block contents %}
 <div class="container mt-5">
-    <h1>パートナー会社登録</h1>
+    <h1>確認画面</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -16,6 +16,9 @@
         
         <div class="form-group">
             <label for="{{ form.logo.id_for_label }}">企業ロゴ:</label>
+            {% if form.logo.value %}
+                <img src="{{ form.logo.value.url }}" alt="Logo" style="max-width: 200px;">
+            {% endif %}
             {{ form.logo }}
         </div>
         
@@ -76,33 +79,44 @@
         
         <div class="form-group">
             <label for="product_info_name">製品名:</label>
-            <input type="text" name="product_info_name" id="product_info_name" class="form-control">
+            <input type="text" name="product_info_name" id="product_info_name" class="form-control" value="{{ request.POST.product_info_name }}">
         </div>
         <div class="form-group">
             <label for="product_info_content">製品内容:</label>
-            <textarea name="product_info_content" id="product_info_content" class="form-control"></textarea>
+            <textarea name="product_info_content" id="product_info_content" class="form-control">{{ request.POST.product_info_content }}</textarea>
         </div>
         <div class="form-group">
             <label for="product_info_image">製品画像:</label>
+            {% if request.FILES.product_info_image %}
+                <img src="{{ request.FILES.product_info_image.url }}" alt="Product Image" style="max-width: 200px;">
+            {% endif %}
             <input type="file" name="product_info_image" id="product_info_image" class="form-control-file">
         </div>
         
         <div class="form-group">
             <label for="case_study_name">ケーススタディ名:</label>
-            <input type="text" name="case_study_name" id="case_study_name" class="form-control">
+            <input type="text" name="case_study_name" id="case_study_name" class="form-control" value="{{ request.POST.case_study_name }}">
         </div>
         <div class="form-group">
             <label for="case_study_content">ケーススタディ内容:</label>
-            <textarea name="case_study_content" id="case_study_content" class="form-control"></textarea>
+            <textarea name="case_study_content" id="case_study_content" class="form-control">{{ request.POST.case_study_content }}</textarea>
         </div>
         <div class="form-group">
             <label for="case_study_image">ケーススタディ画像:</label>
+            {% if request.FILES.case_study_image %}
+                <img src="{{ request.FILES.case_study_image.url }}" alt="Case Study Image" style="max-width: 200px;">
+            {% endif %}
             <input type="file" name="case_study_image" id="case_study_image" class="form-control-file">
         </div>
         
-        <button type="submit" name="confirm" class="btn btn-primary">確認</button>
+        <button type="submit" name="back" class="btn btn-secondary">戻る</button>
+        <button type="submit" name="finalize" class="btn btn-primary">最終登録</button>
     </form>
 </div>
 {% endblock %}
+
+
+
+
 
 

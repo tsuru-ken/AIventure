@@ -6,6 +6,8 @@ app_name = 'partners'
 
 urlpatterns = [
     path('',views.IndexView.as_view(), name='index'),
-    path('partner/create/',views.PartnerCreateView.as_view(),name='partner_create'),
+    path('create/',views.PartnerCreateView.as_view(),name='partner_create'),
 ]
+
+
 
