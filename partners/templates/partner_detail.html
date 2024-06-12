@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+
+{% block title %}パートナー会社詳細{% endblock %}
+
+{% block contents %}
+<div class="container mt-5">
+    <h1>パートナー会社詳細</h1>
+    <div class="row">
+        <div class="col-md3">
+            {% if partner.logo %}
+            <img src="{{ partner.logo.url}}" alt="企業ロゴ" class="img-fluid" >
+            {% else %}
+            <p>ロゴなし</p>
+            {% endif%}
+        </div>
+    </dev>
+
+</div>
+
+{% endblock %}
