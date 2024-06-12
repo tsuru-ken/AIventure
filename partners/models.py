@@ -11,7 +11,14 @@ class Partners(models.Model):
     provision = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
+    service_content = models.ManyToManyField('ServiceContent',blank=True)
+    ai_category = models.ManyToManyField('AiCategory',blank=True)
+    cost = models.ManyToManyField('Cost',blank=True)
+    product_info = models.ManyToManyField('ProductInfo',blank=True)
+    case_study = models.ManyToManyField('CaseStudy',blank=True)
+    
+    
     def __str__(self):
         return self.name
 
@@ -88,12 +95,12 @@ class ProductInfo(models.Model):
     def __str__(self):
         return self.name
 
-# ManyToManyFieldの定義をPartnersモデルに追加
-Partners.add_to_class('service_content', models.ManyToManyField(ServiceContent, blank=True))
-Partners.add_to_class('ai_category', models.ManyToManyField(AiCategory, blank=True))
-Partners.add_to_class('cost', models.ManyToManyField(Cost, blank=True))
-Partners.add_to_class('product_info', models.ManyToManyField(ProductInfo, blank=True))
-Partners.add_to_class('case_study', models.ManyToManyField(CaseStudy, blank=True))
+# # ManyToManyFieldの定義をPartnersモデルに追加
+# Partners.add_to_class('service_content', models.ManyToManyField(ServiceContent, blank=True))
+# Partners.add_to_class('ai_category', models.ManyToManyField(AiCategory, blank=True))
+# Partners.add_to_class('cost', models.ManyToManyField(Cost, blank=True))
+# Partners.add_to_class('product_info', models.ManyToManyField(ProductInfo, blank=True))
+# Partners.add_to_class('case_study', models.ManyToManyField(CaseStudy, blank=True))
 
 
 

@@ -1,13 +1,35 @@
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, ListView,DetailView
 from django.urls import reverse_lazy
 from .models import Partners, ProductInfo, CaseStudy
 from .forms import PartnerForm
 
+
+class PartnerDetailView(DetailView):
+    model = Partners
+    template_name ='partner_detail.html'
+    context_object_name = 'partner'
+
 class IndexView(TemplateView):
     template_name = 'index.html'
+
+class PartnerListView(ListView):
+    model = Partners
+    template_name = 'partner_list.html'
+    context_object_name = 'partners'
+
+    # def get_queryset(self):
+    #     return Partners.objects.prefetch_related('service_content', 'ai_category', 'cost', 'product_info', 'case_study')
+    def get_queryset(self):
+        return Partners.objects.prefetch_related(
+            'service_content',
+            'ai_category',
+            'cost',
+            'product_info',
+            'case_study'
+        ).all()
 
 class PartnerCreateView(CreateView):
     model = Partners
@@ -27,7 +49,17 @@ class PartnerCreateView(CreateView):
             return self.form_invalid(form)
 
     def form_confirm(self, form):
-        return render(self.request, 'partner_confirm.html', {'form': form})
+        logo = self.request.FILES.get('logo') if 'logo' in self.request.FILES else form.instance.logo
+        return render(self.request, 'partner_confirm.html', {
+            'form': form,
+            'logo': logo,
+            'product_info_name': self.request.POST.get('product_info_name', ''),
+            'product_info_content': self.request.POST.get('product_info_content', ''),
+            'product_info_image': self.request.FILES.get('product_info_image'),
+            'case_study_name': self.request.POST.get('case_study_name', ''),
+            'case_study_content': self.request.POST.get('case_study_content', ''),
+            'case_study_image': self.request.FILES.get('case_study_image'),
+        })
 
     def form_finalize(self, form):
         # Save partner instance
@@ -40,6 +72,7 @@ class PartnerCreateView(CreateView):
         case_study_name = self.request.POST.get('case_study_name')
         case_study_content = self.request.POST.get('case_study_content')
         case_study_image = self.request.FILES.get('case_study_image')
+
 
         if product_info_name and product_info_content:
             product_info = ProductInfo(
@@ -63,6 +96,13 @@ class PartnerCreateView(CreateView):
 
     def form_valid(self, form):
         return self.form_confirm(form)
+
+
+
+
+
+
+
 
 
 
