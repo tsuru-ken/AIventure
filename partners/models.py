@@ -11,14 +11,14 @@ class Partners(models.Model):
     provision = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     service_content = models.ManyToManyField('ServiceContent',blank=True)
     ai_category = models.ManyToManyField('AiCategory',blank=True)
     cost = models.ManyToManyField('Cost',blank=True)
     product_info = models.ManyToManyField('ProductInfo',blank=True)
     case_study = models.ManyToManyField('CaseStudy',blank=True)
-    
-    
+
+
     def __str__(self):
         return self.name
 

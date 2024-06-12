@@ -1,6 +1,5 @@
 {% extends 'base.html'%}
 
-
 {% block title %}パートナー会社詳細{% endblock %}
 
 {% block contents %}
@@ -14,8 +13,30 @@
             <p>ロゴなし</p>
             {% endif%}
         </div>
+        <div class="col-md-9">
+            <h2>{{patner.name}}</h2>
+            <p><a href="{{partner.url}}">{{partner.url}}</a></p>
+            <div>
+                <h3>サービス概要</h3>
+                <p>{{ partner.service }}
+            </div>
+            <div>
+                <h3>サービス内容</h3>
+                <p>
+                    {% for item in partner.service_content.all %}
+                    <span class="badge badge-secondary">{{ item.division }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+            <div>
+                <h3>AIカテゴリー</h3>
+                <p>
+                    {% for item in partner.ai_category.all %}
+                    <span class="badge badge-secondary">{{item.genre}}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
     </dev>
-
 </div>
-
 {% endblock %}
