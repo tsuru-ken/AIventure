@@ -1,1 +1,77 @@
 {% extends 'base.html' %}
+
+{% block title %}AI会社一覧{% endblock %}
+
+{% block contents %}
+<div class="container mt-5">
+    <h1>AI会社一覧</h1>
+
+    <div class="form-group">
+        <label for="service_content_filter">サービス内容:</label>
+        <select id="service_content_filter" class="form-control">
+            <option value="">すべて</option>
+            {% for service in service_contents %}
+                <option value="{{ service.id }}">{{ service.division }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ai_category_filter">AIカテゴリ:</label>
+        <select id="ai_category_filter" class="form-control">
+            <option value="">すべて</option>
+            {% for category in ai_categories %}
+                <option value="{{ category.id }}">{{ category.genre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>企業名</th>
+                <th>AIコンサル</th>
+                <th>AI教育</th>
+                <th>画像処理</th>
+                <th>自然言語処理</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for partner in partners %}
+                <tr>
+                    <td>{{ partner.name }}</td>
+                    <td>
+                        {% if 'AIコンサル' in partner.service_content.all %}
+                            <i class="fas fa-check-circle"></i>
+                        {% else %}
+                            <i class="far fa-circle"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if 'AI教育' in partner.service_content.all %}
+                            <i class="fas fa-check-circle"></i>
+                        {% else %}
+                            <i class="far fa-circle"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if '画像処理' in partner.service_content.all %}
+                            <i class="fas fa-check-circle"></i>
+                        {% else %}
+                            <i class="far fa-circle"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if '自然言語処理' in partner.service_content.all %}
+                            <i class="fas fa-check-circle"></i>
+                        {% else %}
+                            <i class="far fa-circle"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

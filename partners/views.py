@@ -1,8 +1,127 @@
-from django.shortcuts import render
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, CreateView, ListView,DetailView
+from django.urls import reverse_lazy
+from .models import Partners, ProductInfo, CaseStudy
+from .forms import PartnerForm
 
-from django.views.generic import TemplateView
 
+class PartnerDetailView(DetailView):
+    model = Partners
+    template_name ='partner_detail.html'
+    context_object_name = 'partner'
 
 class IndexView(TemplateView):
-    
     template_name = 'index.html'
+
+class PartnerListView(ListView):
+    model = Partners
+    template_name = 'partner_list.html'
+    context_object_name = 'partners'
+
+    # def get_queryset(self):
+    #     return Partners.objects.prefetch_related('service_content', 'ai_category', 'cost', 'product_info', 'case_study')
+    def get_queryset(self):
+        return Partners.objects.prefetch_related(
+            'service_content',
+            'ai_category',
+            'cost',
+            'product_info',
+            'case_study'
+        ).all()
+
+class PartnerCreateView(CreateView):
+    model = Partners
+    form_class = PartnerForm
+    template_name = 'partner_form.html'
+    success_url = reverse_lazy('partners:index')
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid() and 'confirm' in request.POST:
+            return self.form_confirm(form)
+        elif form.is_valid() and 'finalize' in request.POST:
+            return self.form_finalize(form)
+        elif 'back' in request.POST:
+            return self.form_invalid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_confirm(self, form):
+        logo = self.request.FILES.get('logo') if 'logo' in self.request.FILES else form.instance.logo
+        return render(self.request, 'partner_confirm.html', {
+            'form': form,
+            'logo': logo,
+            'product_info_name': self.request.POST.get('product_info_name', ''),
+            'product_info_content': self.request.POST.get('product_info_content', ''),
+            'product_info_image': self.request.FILES.get('product_info_image'),
+            'case_study_name': self.request.POST.get('case_study_name', ''),
+            'case_study_content': self.request.POST.get('case_study_content', ''),
+            'case_study_image': self.request.FILES.get('case_study_image'),
+        })
+
+    def form_finalize(self, form):
+        # Save partner instance
+        self.object = form.save()
+
+        # Save related instances for product_info and case_study
+        product_info_name = self.request.POST.get('product_info_name')
+        product_info_content = self.request.POST.get('product_info_content')
+        product_info_image = self.request.FILES.get('product_info_image')
+        case_study_name = self.request.POST.get('case_study_name')
+        case_study_content = self.request.POST.get('case_study_content')
+        case_study_image = self.request.FILES.get('case_study_image')
+
+
+        if product_info_name and product_info_content:
+            product_info = ProductInfo(
+                partner=self.object,
+                name=product_info_name,
+                content=product_info_content,
+                image=product_info_image
+            )
+            product_info.save()
+
+        if case_study_name and case_study_content:
+            case_study = CaseStudy(
+                partner=self.object,
+                name=case_study_name,
+                content=case_study_content,
+                image=case_study_image
+            )
+            case_study.save()
+
+        return redirect(self.success_url)
+
+    def form_valid(self, form):
+        return self.form_confirm(form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

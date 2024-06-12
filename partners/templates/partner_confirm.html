@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}確認画面{% endblock %}
+
+{% block contents %}
+<div class="container mt-5">
+    <h1>確認画面</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">会社名:</label>
+            {{ form.name }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.logo.id_for_label }}">企業ロゴ:</label>
+            {% if logo %}
+                <img src="{{ logo.url }}" alt="企業ロゴ" width="100">
+            {% else %}
+                ファイルを選択
+            {% endif %}
+            {{ form.logo }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">住所:</label>
+            {{ form.address }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.url.id_for_label }}">URL:</label>
+            {{ form.url }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.established.id_for_label }}">設立:</label>
+            {{ form.established }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.service.id_for_label }}">サービス概要記載:</label>
+            {{ form.service }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.engineer.id_for_label }}">エンジニア数:</label>
+            {{ form.engineer }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.provision.id_for_label }}">提供サービス:</label>
+            {{ form.provision }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.service_content.id_for_label }}">サービス内容:</label>
+            {{ form.service_content }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.ai_category.id_for_label }}">AIカテゴリー:</label>
+            {{ form.ai_category }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.cost.id_for_label }}">コスト:</label>
+            {{ form.cost }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.product_info.id_for_label }}">製品情報:</label>
+            {{ form.product_info }}
+        </div>
+        <div class="form-group">
+            <label for="product_info_name">製品名:</label>
+            <input type="text" name="product_info_name" id="product_info_name" class="form-control" value="{{ product_info_name }}">
+        </div>
+        <div class="form-group">
+            <label for="product_info_content">製品内容:</label>
+            <textarea name="product_info_content" id="product_info_content" class="form-control">{{ product_info_content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="product_info_image">製品画像:</label>
+            {% if product_info_image %}
+                <img src="{{ product_info_image.url }}" alt="製品画像" width="100">
+            {% else %}
+                ファイルを選択
+            {% endif %}
+            <input type="file" name="product_info_image" id="product_info_image" class="form-control-file">
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.case_study.id_for_label }}">ケーススタディ:</label>
+            {{ form.case_study }}
+        </div>
+        <div class="form-group">
+            <label for="case_study_name">ケーススタディ名:</label>
+            <input type="text" name="case_study_name" id="case_study_name" class="form-control" value="{{ case_study_name }}">
+        </div>
+        <div class="form-group">
+            <label for="case_study_content">ケーススタディ内容:</label>
+            <textarea name="case_study_content" id="case_study_content" class="form-control">{{ case_study_content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="case_study_image">ケーススタディ画像:</label>
+            {% if case_study_image %}
+                <img src="{{ case_study_image.url }}" alt="ケーススタディ画像" width="100">
+            {% else %}
+                ファイルを選択
+            {% endif %}
+            <input type="file" name="case_study_image" id="case_study_image" class="form-control-file">
+        </div>
+        
+        <button type="submit" name="finalize" class="btn btn-primary">登録</button>
+        <button type="submit" name="back" class="btn btn-secondary">戻る</button>
+    </form>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

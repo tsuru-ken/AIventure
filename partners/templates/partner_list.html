@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}パートナー会社一覧{% endblock %}
+
+{% block contents %}
+<div class="container mt-5">
+    <h1>パートナー会社一覧</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>会社名</th>
+                <th>企業ロゴ</th>
+                <th>住所</th>
+                <th>URL</th>
+                <th>設立</th>
+                <th>サービス概要記載</th>
+                <th>エンジニア数</th>
+                <th>提供サービス</th>
+                <th>サービス内容</th>
+                <th>AIカテゴリー</th>
+                <th>コスト</th>
+                <th>製品情報</th>
+                <th>ケーススタディ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for partner in partners %}
+            <tr>
+                <td><a href= "{% url 'partners:partner_detail' partner.pk%}">{{ partner.name }}</td>
+                <td>
+                    {% if partner.logo %}
+                    <img src="{{ partner.logo.url }}" alt="企業ロゴ" width="100">
+                    {% else %}
+                    なし
+                    {% endif %}
+                </td>
+                <td>{{ partner.address }}</td>
+                <td><a href="{{ partner.url }}">{{ partner.url }}</a></td>
+                <td>{{ partner.established|date:"Y年n月j日" }}</td>
+                <td>{{ partner.service }}</td>
+                <td>{{ partner.engineer }}</td>
+                <td>{{ partner.provision }}</td>
+                <td>
+                    {% for item in partner.service_content.all %}
+                        {{ item.division }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in partner.ai_category.all %}
+                        {{ item.genre }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in partner.cost.all %}
+                        {{ item.breakdown }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in partner.product_info.all %}
+                        <strong>{{ item.name }}</strong>: {{ item.content }}<br>
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="製品画像" width="100"><br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in partner.case_study.all %}
+                        <strong>{{ item.name }}</strong>: {{ item.content }}<br>
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="ケーススタディ画像" width="100"><br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- デバッグ用に追加 -->
+    {% for partner in partners %}
+        <pre>{{ partner | pprint }}</pre>
+        <pre>{{partner.service_content.all | pprint}}</pre>
+        <pre>{{partner.ai_category.all | pprint}}</pre>
+        <pre>{{partner.cost.all | pprint}}</pre>
+        <pre>{{partner.product_info.all | pprint}}</pre>
+        <pre>{{partner.case_study.all | pprint}}</pre>
+    {% endfor %}
+    <!-- ここまでデバッグ用に追加 -->
+</div>
+{% endblock %}
+
+
+
+
+
