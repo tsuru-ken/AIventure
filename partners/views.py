@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 from django.urls import reverse_lazy
-from .models import Partners, ProductInfo, CaseStudy
-from .forms import PartnerForm
+from .models import Partners, ProductInfo, CaseStudy, ServiceContent, AiCategory, Cost
+from .forms import PartnerForm, PartnerSearchForm
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import logging
@@ -25,13 +25,32 @@ class PartnerListView(ListView):
     context_object_name = 'partners'
 
     def get_queryset(self):
-        return Partners.objects.prefetch_related(
+        queryset = Partners.objects.prefetch_related(
             'service_content',
             'ai_category',
             'cost',
             'product_info',
             'case_study'
         ).all()
+
+        form = PartnerSearchForm(self.request.GET or None)
+        if form.is_valid():
+            if form.cleaned_data['service_content']:
+                queryset = queryset.filter(service_content=form.cleaned_data['service_content'])
+            if form.cleaned_data['ai_category']:
+                queryset = queryset.filter(ai_category=form.cleaned_data['ai_category'])
+            if form.cleaned_data['cost']:
+                queryset = queryset.filter(cost=form.cleaned_data['cost'])
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_services'] = ServiceContent.objects.all()
+        context['all_categories'] = AiCategory.objects.all()
+        context['all_costs'] = Cost.objects.all()
+        context['form'] = PartnerSearchForm(self.request.GET or None)
+        return context
 
 class PartnerCreateView(CreateView):
     model = Partners
@@ -117,6 +136,7 @@ class PartnerCreateView(CreateView):
             'case_study_image_url': self.request.POST.get('case_study_image_url', ''),
         })
         return self.render_to_response(context)
+
 
 
 

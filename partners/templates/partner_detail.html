@@ -15,16 +15,15 @@
         </div>
         <div class="col-md-9">
             <h1>{{ partner.name }}</h1>
-            <p><a href="{{ partner.url }}" target="_blank">{{ partner.url }}</a></p>
+            {% comment %} <p><a href="{{ partner.url }}" target="_blank">{{ partner.url }}</a></p> {% endcomment %}
             <div>
                 <h3>サービス概要</h3>
                 <p>{{ partner.service }}</p>
             </div>
         </div>
     </div>
-    <hr>
     <!-- 下部のレイアウト -->
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
@@ -75,5 +74,6 @@
     </div>
 </div>
 {% endblock %}
+
 
 

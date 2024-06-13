@@ -37,7 +37,22 @@ class PartnerForm(forms.ModelForm):
         # self.fields['product_info'].queryset = ProductInfo.objects.all()
         # self.fields['case_study'].queryset = CaseStudy.objects.all()
 
-
+class PartnerSearchForm(forms.Form):
+    service_content = forms.ModelChoiceField(
+        queryset=ServiceContent.objects.all(),
+        required=False,
+        label='サービス内容'
+    )
+    ai_category = forms.ModelChoiceField(
+        queryset=AiCategory.objects.all(),
+        required=False,
+        label='AIカテゴリ'
+    )
+    cost = forms.ModelChoiceField(
+        queryset=Cost.objects.all(),
+        required=False,
+        label='コスト'
+    )
 
 
 
