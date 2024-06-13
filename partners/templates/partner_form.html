@@ -17,6 +17,7 @@
         <div class="form-group">
             <label for="{{ form.logo.id_for_label }}">企業ロゴ:</label>
             {{ form.logo }}
+            <img id="logoPreview" src="#" alt="企業ロゴプレビュー" style="display:none; width:100px; margin-top:10px;" />
         </div>
 
         <div class="form-group">
@@ -64,11 +65,9 @@
             {{ form.cost }}
         </div>
 
-        <div class="form-group">
-            <label for="{{ form.product_info.id_for_label }}">製品情報:</label>
-            {{ form.product_info }}
+        <div>
+            <h3>製品情報</h3>
         </div>
-
         <div class="form-group">
             <label for="product_info_name">製品名:</label>
             <input type="text" name="product_info_name" id="product_info_name" class="form-control">
@@ -80,13 +79,12 @@
         <div class="form-group">
             <label for="product_info_image">製品画像:</label>
             <input type="file" name="product_info_image" id="product_info_image" class="form-control-file">
+            <img id="productImagePreview" src="#" alt="製品画像プレビュー" style="display:none; width:100px; margin-top:10px;" />
         </div>
 
-        <div class="form-group">
-            <label for="{{ form.case_study.id_for_label }}">ケーススタディ:</label>
-            {{ form.case_study }}
+        <div>
+            <h3>ケーススタディ</h3>
         </div>
-        
         <div class="form-group">
             <label for="case_study_name">ケーススタディ名:</label>
             <input type="text" name="case_study_name" id="case_study_name" class="form-control">
@@ -98,12 +96,42 @@
         <div class="form-group">
             <label for="case_study_image">ケーススタディ画像:</label>
             <input type="file" name="case_study_image" id="case_study_image" class="form-control-file">
+            <img id="caseStudyImagePreview" src="#" alt="ケーススタディ画像プレビュー" style="display:none; width:100px; margin-top:10px;" />
         </div>
 
         <button type="submit" name="confirm" class="btn btn-primary">確認</button>
     </form>
 </div>
+
+<script>
+    document.getElementById("id_logo").addEventListener("change", function() {
+        readURL(this, "logoPreview");
+    });
+
+    document.getElementById("product_info_image").addEventListener("change", function() {
+        readURL(this, "productImagePreview");
+    });
+
+    document.getElementById("case_study_image").addEventListener("change", function() {
+        readURL(this, "caseStudyImagePreview");
+    });
+
+    function readURL(input, previewId) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var preview = document.getElementById(previewId);
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 {% endblock %}
+
 
 
 

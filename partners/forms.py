@@ -32,8 +32,8 @@ class PartnerForm(forms.ModelForm):
         self.fields['service_content'].queryset = ServiceContent.objects.all()
         self.fields['ai_category'].queryset = AiCategory.objects.all()
         self.fields['cost'].queryset = Cost.objects.all()
-        self.fields['product_info'].queryset = ProductInfo.objects.all()
-        self.fields['case_study'].queryset = CaseStudy.objects.all()
+        # self.fields['product_info'].queryset = ProductInfo.objects.all()
+        # self.fields['case_study'].queryset = CaseStudy.objects.all()
 
 
 
