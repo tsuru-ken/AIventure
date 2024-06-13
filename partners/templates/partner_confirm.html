@@ -8,17 +8,17 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        
+
         <div class="form-group">
             <label for="{{ form.name.id_for_label }}">会社名:</label>
             {{ form.name }}
         </div>
-        
         <div class="form-group">
             <label for="{{ form.logo.id_for_label }}">企業ロゴ:</label>
             {% if logo_url %}
                 <img id="logoPreview" src="{{ logo_url }}" alt="企業ロゴ" width="100">
             {% endif %}
+            {{ form.logo }}
         </div>
         
         <div class="form-group">
@@ -82,6 +82,7 @@
             {% if product_info_image_url %}
                 <img id="productInfoImagePreview" src="{{ product_info_image_url }}" alt="製品画像" width="100">
             {% endif %}
+            <input type="file" name="product_info_image" id="product_info_image" class="form-control-file">
         </div>
 
         <div>
@@ -100,6 +101,7 @@
             {% if case_study_image_url %}
                 <img id="caseStudyImagePreview" src="{{ case_study_image_url }}" alt="ケーススタディ画像" width="100">
             {% endif %}
+            <input type="file" name="case_study_image" id="case_study_image" class="form-control-file">
         </div>
         
         <button type="submit" name="finalize" class="btn btn-primary">登録</button>
@@ -107,6 +109,9 @@
     </form>
 </div>
 {% endblock %}
+
+
+
 
 
 

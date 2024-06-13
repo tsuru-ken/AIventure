@@ -76,14 +76,14 @@
         </tbody>
     </table>
     <!-- デバッグ用に追加 -->
-    {% for partner in partners %}
+    {% comment %} {% for partner in partners %}
         <pre>{{ partner | pprint }}</pre>
         <pre>{{partner.service_content.all | pprint}}</pre>
         <pre>{{partner.ai_category.all | pprint}}</pre>
         <pre>{{partner.cost.all | pprint}}</pre>
         <pre>{{partner.product_info.all | pprint}}</pre>
         <pre>{{partner.case_study.all | pprint}}</pre>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
     <!-- ここまでデバッグ用に追加 -->
 </div>
 {% endblock %}

@@ -2,7 +2,9 @@ from django import forms
 from .models import Partners, ServiceContent, AiCategory, Cost, ProductInfo, CaseStudy
 
 class PartnerForm(forms.ModelForm):
-    service_content = forms.ModelMultipleChoiceField(queryset=ServiceContent.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    service_content = forms.ModelMultipleChoiceField(
+        queryset=ServiceContent.objects.all(), 
+        widget=forms.CheckboxSelectMultiple, required=False)
     ai_category = forms.ModelMultipleChoiceField(queryset=AiCategory.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     cost = forms.ModelMultipleChoiceField(queryset=Cost.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     product_info = forms.ModelMultipleChoiceField(queryset=ProductInfo.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
