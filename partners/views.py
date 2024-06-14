@@ -11,10 +11,36 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+from django.views.generic import DetailView
+from .models import Partners
+import logging
+
+logger = logging.getLogger(__name__)
+
 class PartnerDetailView(DetailView):
     model = Partners
     template_name = 'partner_detail.html'
     context_object_name = 'partner'
+
+    def get_queryset(self):
+        return Partners.objects.prefetch_related(
+            'service_content',
+            'ai_category',
+            'cost'
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['service_content'] = self.object.service_content.all()
+        context['ai_category'] = self.object.ai_category.all()
+        context['cost'] = self.object.cost.all()
+        logger.debug(f"Service content: {context['service_content']}")
+        logger.debug(f"AI category: {context['ai_category']}")
+        logger.debug(f"Cost: {context['cost']}")
+        return context
+
+
+
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -136,6 +162,8 @@ class PartnerCreateView(CreateView):
             'case_study_image_url': self.request.POST.get('case_study_image_url', ''),
         })
         return self.render_to_response(context)
+
+
 
 
 

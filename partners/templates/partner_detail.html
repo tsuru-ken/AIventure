@@ -15,12 +15,18 @@
         </div>
         <div class="col-md-9">
             <h1>{{ partner.name }}</h1>
-            {% comment %} <p><a href="{{ partner.url }}" target="_blank">{{ partner.url }}</a></p> {% endcomment %}
             <div>
                 <h3>サービス概要</h3>
                 <p>{{ partner.service }}</p>
             </div>
         </div>
+    </div>
+    <!-- デバッグ用出力 -->
+    <div>
+        <h3>デバッグ用出力</h3>
+        <p>サービス内容: {{ service_content }}</p>
+        <p>AIカテゴリー: {{ ai_category }}</p>
+        <p>コスト: {{ cost }}</p>
     </div>
     <!-- 下部のレイアウト -->
     <div class="row mt-5">
@@ -32,12 +38,6 @@
                         <strong>所在地:</strong> {{ partner.address }}<br>
                         <strong>URL:</strong> <a href="{{ partner.url }}" target="_blank">{{ partner.url }}</a><br>
                         <strong>設立年:</strong> {{ partner.established.year }}年<br>
-                        <strong>全国対応:</strong> {{ partner.is_nationwide }}<br>
-                        <strong>サービス提供方法:</strong> {{ partner.service_method }}<br>
-                        <strong>コスト感:</strong> 
-                        {% for item in partner.cost.all %}
-                            <span class="badge badge-secondary">{{ item.breakdown }}</span>
-                        {% endfor %}
                     </p>
                 </div>
             </div>
@@ -46,24 +46,30 @@
             <div>
                 <h3>提供サービス</h3>
                 <p>
-                    {% for item in partner.service_content.all %}
+                    {% for item in service_content %}
                         <span class="badge badge-secondary">{{ item.division }}</span>
+                    {% empty %}
+                        <span>サービス内容がありません</span>
                     {% endfor %}
                 </p>
             </div>
             <div>
                 <h3>AIカテゴリー</h3>
                 <p>
-                    {% for item in partner.ai_category.all %}
+                    {% for item in ai_category %}
                         <span class="badge badge-secondary">{{ item.genre }}</span>
+                    {% empty %}
+                        <span>AIカテゴリーがありません</span>
                     {% endfor %}
                 </p>
             </div>
             <div>
-                <h3>得意業種</h3>
+                <h3>コスト感</h3>
                 <p>
-                    {% for item in partner.specialty_industry.all %}
-                        <span class="badge badge-secondary">{{ item.name }}</span>
+                    {% for item in cost %}
+                        <span class="badge badge-secondary">{{ item.breakdown }}</span>
+                    {% empty %}
+                        <span>コスト情報がありません</span>
                     {% endfor %}
                 </p>
             </div>
@@ -74,6 +80,22 @@
     </div>
 </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
