@@ -11,46 +11,60 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from django.views.generic import DetailView
-from .models import Partners
-import logging
-
-logger = logging.getLogger(__name__)
-
 class PartnerDetailView(DetailView):
-    model = Partners
-    template_name = 'partner_detail.html'
-    context_object_name = 'partner'
+    """
+    パートナーの詳細ビューを表示するクラス。
+    """
+    model = Partners  # モデルを指定
+    template_name = 'partner_detail.html'  # テンプレートファイルを指定
+    context_object_name = 'partner'  # テンプレート内で使用するコンテキスト名を指定
 
     def get_queryset(self):
+        """
+        関連するデータを事前に取得するためのクエリセットを返す。
+        """
         return Partners.objects.prefetch_related(
             'service_content',
             'ai_category',
-            'cost'
+            'cost',
+            'product_info',
         )
 
     def get_context_data(self, **kwargs):
+        """
+        テンプレートに渡すコンテキストデータを追加する。
+        """
         context = super().get_context_data(**kwargs)
-        context['service_content'] = self.object.service_content.all()
-        context['ai_category'] = self.object.ai_category.all()
-        context['cost'] = self.object.cost.all()
+        context['service_content'] = self.object.service_content.all()  # サービスコンテンツを追加
+        context['ai_category'] = self.object.ai_category.all()  # AIカテゴリを追加
+        context['cost'] = self.object.cost.all()  # コスト情報を追加
+        context['product_info']= self.object.cost.all() #製品情報を追加
         logger.debug(f"Service content: {context['service_content']}")
         logger.debug(f"AI category: {context['ai_category']}")
         logger.debug(f"Cost: {context['cost']}")
+        logger.debug(f"Product info: {context['product_info']}")
         return context
 
 
-
-
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    """
+    インデックスビューを表示するクラス。
+    """
+    template_name = 'index.html'  # テンプレートファイルを指定
+
 
 class PartnerListView(ListView):
-    model = Partners
-    template_name = 'partner_list.html'
-    context_object_name = 'partners'
+    """
+    パートナー一覧ビューを表示するクラス。
+    """
+    model = Partners  # モデルを指定
+    template_name = 'partner_list.html'  # テンプレートファイルを指定
+    context_object_name = 'partners'  # テンプレート内で使用するコンテキスト名を指定
 
     def get_queryset(self):
+        """
+        一覧表示するためのクエリセットを返す。
+        """
         queryset = Partners.objects.prefetch_related(
             'service_content',
             'ai_category',
@@ -71,31 +85,44 @@ class PartnerListView(ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        """
+        テンプレートに渡すコンテキストデータを追加する。
+        """
         context = super().get_context_data(**kwargs)
-        context['all_services'] = ServiceContent.objects.all()
-        context['all_categories'] = AiCategory.objects.all()
-        context['all_costs'] = Cost.objects.all()
-        context['form'] = PartnerSearchForm(self.request.GET or None)
+        context['all_services'] = ServiceContent.objects.all()  # 全サービスコンテンツを追加
+        context['all_categories'] = AiCategory.objects.all()  # 全AIカテゴリを追加
+        context['all_costs'] = Cost.objects.all()  # 全コスト情報を追加
+        context['form'] = PartnerSearchForm(self.request.GET or None)  # 検索フォームを追加
         return context
 
+
 class PartnerCreateView(CreateView):
-    model = Partners
-    form_class = PartnerForm
-    template_name = 'partner_form.html'
-    success_url = reverse_lazy('partners:index')
+    """
+    パートナー作成ビューを表示するクラス。
+    """
+    model = Partners  # モデルを指定
+    form_class = PartnerForm  # 使用するフォームクラスを指定
+    template_name = 'partner_form.html'  # テンプレートファイルを指定
+    success_url = reverse_lazy('partners:index')  # 成功時のリダイレクトURLを指定
 
     def post(self, request, *args, **kwargs):
+        """
+        POSTリクエストの処理を行う。
+        """
         form = self.get_form()
         if form.is_valid() and 'confirm' in request.POST:
-            return self.form_confirm(form)
+            return self.form_confirm(form)  # 確認処理
         elif form.is_valid() and 'finalize' in request.POST:
-            return self.form_finalize(form)
+            return self.form_finalize(form)  # 最終処理
         elif 'back' in request.POST:
-            return self.form_invalid(form)
+            return self.form_invalid(form)  # 無効なフォームの処理
         else:
             return self.form_invalid(form)
 
     def form_confirm(self, form):
+        """
+        確認ページを表示するための処理。
+        """
         logo = self.request.FILES.get('logo') if 'logo' in self.request.FILES else form.instance.logo
         product_info_image = self.request.FILES.get('product_info_image')
         case_study_image = self.request.FILES.get('case_study_image')
@@ -116,10 +143,16 @@ class PartnerCreateView(CreateView):
         })
 
     def _save_temp_image(self, image):
+        """
+        一時的な画像を保存するための処理。
+        """
         path = default_storage.save('tmp/' + image.name, ContentFile(image.read()))
         return default_storage.url(path)
 
     def form_finalize(self, form):
+        """
+        フォームの最終処理を行い、データベースに保存する。
+        """
         self.object = form.save()
 
         product_info_name = self.request.POST.get('product_info_name')
@@ -150,6 +183,9 @@ class PartnerCreateView(CreateView):
         return redirect(self.success_url)
 
     def form_invalid(self, form):
+        """
+        無効なフォームを再表示する。
+        """
         self.object = None
         context = self.get_context_data(form=form)
         context.update({
@@ -162,6 +198,7 @@ class PartnerCreateView(CreateView):
             'case_study_image_url': self.request.POST.get('case_study_image_url', ''),
         })
         return self.render_to_response(context)
+
 
 
 

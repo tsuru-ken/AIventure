@@ -21,14 +21,6 @@
             </div>
         </div>
     </div>
-    <!-- デバッグ用出力 -->
-    <div>
-        <h3>デバッグ用出力</h3>
-        <p>サービス内容: {{ service_content }}</p>
-        <p>AIカテゴリー: {{ ai_category }}</p>
-        <p>コスト: {{ cost }}</p>
-    </div>
-    <!-- 下部のレイアウト -->
     <div class="row mt-5">
         <div class="col-md-3">
             <div class="card">
@@ -45,33 +37,40 @@
         <div class="col-md-9">
             <div>
                 <h3>提供サービス</h3>
-                <p>
+                <p style="color: black; background-color: white;">
                     {% for item in service_content %}
-                        <span class="badge badge-secondary">{{ item.division }}</span>
+                        <span class="badge badge-secondary" style="color: black;">{{ item.division }}</span>
                     {% empty %}
-                        <span>サービス内容がありません</span>
+                        <span style="color: black;">サービス内容がありません</span>
                     {% endfor %}
                 </p>
             </div>
             <div>
                 <h3>AIカテゴリー</h3>
-                <p>
+                <p style="color: black; background-color: white;">
                     {% for item in ai_category %}
-                        <span class="badge badge-secondary">{{ item.genre }}</span>
+                        <span class="badge badge-secondary" style="color: black;">{{ item.genre }}</span>
                     {% empty %}
-                        <span>AIカテゴリーがありません</span>
+                        <span style="color: black;">AIカテゴリーがありません</span>
                     {% endfor %}
                 </p>
             </div>
             <div>
                 <h3>コスト感</h3>
-                <p>
+                <p style="color: black; background-color: white;">
                     {% for item in cost %}
-                        <span class="badge badge-secondary">{{ item.breakdown }}</span>
+                        <span class="badge badge-secondary" style="color: black;">{{ item.breakdown }}</span>
                     {% empty %}
-                        <span>コスト情報がありません</span>
+                        <span style="color: black;">コスト情報がありません</span>
                     {% endfor %}
                 </p>
+            </div>
+            <div>
+                <h3>
+                <p style="color: black; background-color: white;">
+                    {% for item in product_info %}
+                        <span class="badge badge-secondary" style="colo: blackr;">{{ item.division}}</span>
+                </h3>
             </div>
         </div>
     </div>
@@ -80,6 +79,10 @@
     </div>
 </div>
 {% endblock %}
+
+
+
+
 
 
 
