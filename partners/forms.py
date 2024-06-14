@@ -2,7 +2,9 @@ from django import forms
 from .models import Partners, ServiceContent, AiCategory, Cost, ProductInfo, CaseStudy
 
 class PartnerForm(forms.ModelForm):
-    service_content = forms.ModelMultipleChoiceField(queryset=ServiceContent.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    service_content = forms.ModelMultipleChoiceField(
+        queryset=ServiceContent.objects.all(), 
+        widget=forms.CheckboxSelectMultiple, required=False)
     ai_category = forms.ModelMultipleChoiceField(queryset=AiCategory.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     cost = forms.ModelMultipleChoiceField(queryset=Cost.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     product_info = forms.ModelMultipleChoiceField(queryset=ProductInfo.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
@@ -32,10 +34,25 @@ class PartnerForm(forms.ModelForm):
         self.fields['service_content'].queryset = ServiceContent.objects.all()
         self.fields['ai_category'].queryset = AiCategory.objects.all()
         self.fields['cost'].queryset = Cost.objects.all()
-        self.fields['product_info'].queryset = ProductInfo.objects.all()
-        self.fields['case_study'].queryset = CaseStudy.objects.all()
+        # self.fields['product_info'].queryset = ProductInfo.objects.all()
+        # self.fields['case_study'].queryset = CaseStudy.objects.all()
 
-
+class PartnerSearchForm(forms.Form):
+    service_content = forms.ModelChoiceField(
+        queryset=ServiceContent.objects.all(),
+        required=False,
+        label='サービス内容'
+    )
+    ai_category = forms.ModelChoiceField(
+        queryset=AiCategory.objects.all(),
+        required=False,
+        label='AIカテゴリ'
+    )
+    cost = forms.ModelChoiceField(
+        queryset=Cost.objects.all(),
+        required=False,
+        label='コスト'
+    )
 
 
 

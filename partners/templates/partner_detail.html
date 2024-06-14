@@ -1,42 +1,101 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block title %}パートナー会社詳細{% endblock %}
 
 {% block contents %}
 <div class="container mt-5">
-    <h1>パートナー会社詳細</h1>
+    <!-- 上部のレイアウト -->
     <div class="row">
-        <div class="col-md3">
+        <div class="col-md-3">
             {% if partner.logo %}
-            <img src="{{ partner.logo.url}}" alt="企業ロゴ" class="img-fluid" >
+                <img src="{{ partner.logo.url }}" alt="企業ロゴ" class="img-fluid">
             {% else %}
-            <p>ロゴなし</p>
-            {% endif%}
+                <p>ロゴなし</p>
+            {% endif %}
         </div>
         <div class="col-md-9">
-            <h2>{{patner.name}}</h2>
-            <p><a href="{{partner.url}}">{{partner.url}}</a></p>
+            <h1>{{ partner.name }}</h1>
             <div>
                 <h3>サービス概要</h3>
-                <p>{{ partner.service }}
+                <p>{{ partner.service }}</p>
             </div>
+        </div>
+    </div>
+    <!-- デバッグ用出力 -->
+    <div>
+        <h3>デバッグ用出力</h3>
+        <p>サービス内容: {{ service_content }}</p>
+        <p>AIカテゴリー: {{ ai_category }}</p>
+        <p>コスト: {{ cost }}</p>
+    </div>
+    <!-- 下部のレイアウト -->
+    <div class="row mt-5">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ partner.name }}</h4>
+                    <p class="card-text">
+                        <strong>所在地:</strong> {{ partner.address }}<br>
+                        <strong>URL:</strong> <a href="{{ partner.url }}" target="_blank">{{ partner.url }}</a><br>
+                        <strong>設立年:</strong> {{ partner.established.year }}年<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
             <div>
-                <h3>サービス内容</h3>
+                <h3>提供サービス</h3>
                 <p>
-                    {% for item in partner.service_content.all %}
-                    <span class="badge badge-secondary">{{ item.division }}</span>
+                    {% for item in service_content %}
+                        <span class="badge badge-secondary">{{ item.division }}</span>
+                    {% empty %}
+                        <span>サービス内容がありません</span>
                     {% endfor %}
                 </p>
             </div>
             <div>
                 <h3>AIカテゴリー</h3>
                 <p>
-                    {% for item in partner.ai_category.all %}
-                    <span class="badge badge-secondary">{{item.genre}}
+                    {% for item in ai_category %}
+                        <span class="badge badge-secondary">{{ item.genre }}</span>
+                    {% empty %}
+                        <span>AIカテゴリーがありません</span>
+                    {% endfor %}
+                </p>
+            </div>
+            <div>
+                <h3>コスト感</h3>
+                <p>
+                    {% for item in cost %}
+                        <span class="badge badge-secondary">{{ item.breakdown }}</span>
+                    {% empty %}
+                        <span>コスト情報がありません</span>
                     {% endfor %}
                 </p>
             </div>
         </div>
-    </dev>
+    </div>
+    <div class="mt-4">
+        <a href="{% url 'partners:index' %}" class="btn btn-secondary">パートナー一覧に戻る</a>
+    </div>
 </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
