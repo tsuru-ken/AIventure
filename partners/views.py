@@ -28,6 +28,7 @@ class PartnerDetailView(DetailView):
             'ai_category',
             'cost',
             'product_info',
+            'case_study',
         )
 
     def get_context_data(self, **kwargs):
@@ -38,11 +39,13 @@ class PartnerDetailView(DetailView):
         context['service_content'] = self.object.service_content.all()  # サービスコンテンツを追加
         context['ai_category'] = self.object.ai_category.all()  # AIカテゴリを追加
         context['cost'] = self.object.cost.all()  # コスト情報を追加
-        context['product_info']= self.object.cost.all() #製品情報を追加
-        logger.debug(f"Service content: {context['service_content']}")
-        logger.debug(f"AI category: {context['ai_category']}")
-        logger.debug(f"Cost: {context['cost']}")
-        logger.debug(f"Product info: {context['product_info']}")
+        context['product_info']= self.object.product_info.all() #製品情報を追加
+        context['case_study']= self.object.case_study.all() #事例を追加
+        print(f"Service content: {context['service_content']}")
+        print(f"AI category: {context['ai_category']}")
+        print(f"Cost: {context['cost']}")
+        print(f"Product info: {context['product_info']}")
+        print(f"Case study: {context['case_study']}")
         return context
 
 
