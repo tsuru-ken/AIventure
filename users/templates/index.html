@@ -3,14 +3,77 @@
 {% block title %}TOP Page{% endblock %}
 
 {% block contents %}
-<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-    <div class="col-md-6 px-0">
-        <div class="col text-center">
-            <h1>TOP Pageへようこそ</h1>
-        </div>
+<div class="jumbotron p-2 text-white rounded" style="background: none;">
+    <div class="col-md-6 px-0 mx-auto text-center">
+        <h1 style="font-weight: bold; color: #00FF00;">AI Venture</h1>
     </div>
 </div>
+<div class="jumbotron p-2 text-white rounded" style="background: rgba(0, 0, 0, 0.5); margin-top: 1rem;">
+    <div class="col-md-8 px-0 mx-auto text-center">
+        <h2 style="font-weight: bold;">AIを手軽に「学べる・作れる・試せる」クラウド型AIプラットフォームの誕生です。</h2>
+    </div>
+</div>
+<div class="jumbotron p-2 text-white rounded" style="background: rgba(0, 0, 0, 0.5); margin-top: 1rem;">
+    <div class="col-md-10 px-0 mx-auto text-center">
+        <p style="font-size: 1.25rem; text-center; margin-bottom: 0.5rem;">
+            AI Ventureは、情報発信、モデル開発、モデル評価もできるクラウドサービス。
+        </p>
+        <p style="font-size: 1.25rem; text-center; margin-bottom: 0.5rem;">
+            AIについて学ぶことから、データを使ったシミュレーションまで、
+        </p>
+        <p style="font-size: 1.25rem; text-center; margin-bottom: 0.5rem;">
+            幅広い使い方を想定して作られたのがAI Ventureの特徴です。
+        </p>
+        <p style="font-size: 1.25rem; text-center; margin-bottom: 0.5rem;">
+            AIに関して初歩から学びたい人も、持っているデータを使って今すぐ試したい人も。
+        </p>
+        <p style="font-size: 1.25rem; text-center; margin-bottom: 0.5rem;">
+            ひとりひとりに合った使い方がきっと見つかるはず。
+        </p>
+        <p style="font-size: 1.25rem; text-center; margin-bottom: 0.5rem;">
+            時間と開発費を最小限に、あなたのアイデアをAIで拡張してみませんか。
+        </p>
+    </div>
+</div>
+<div class="text-center mt-4">
+    <a class="btn btn-outline-primary btn-lg mx-2 ai-link" href="{% url 'ai_models:ai_model_index' %}">
+        <i class="fas fa-robot"></i> AIモデル一覧
+    </a>
+    <a class="btn btn-outline-primary btn-lg mx-2 ai-link" href="{% url 'partners:index' %}">
+        <i class="fas fa-building"></i> AI開発会社一覧
+    </a>
+</div>
+<style>
+    .ai-link {
+        background-color: transparent; 
+        border: 2px solid white; 
+        color: white; 
+        padding: 10px 20px; 
+        border-radius: 30px; 
+        font-weight: bold;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .ai-link:hover {
+        background-color: transparent;
+        color: #00FF00;
+        border-color: #00FF00;
+    }
+</style>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
