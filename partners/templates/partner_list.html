@@ -4,64 +4,113 @@
 
 {% block contents %}
 <div class="container mt-5">
-    <h1>パートナー会社一覧</h1>
+    <h1 class="text-center text-success">パートナー会社一覧</h1>
 
     <form method="get" action="">
-        <div class="form-row">
-            <div class="col">
-                {{ form.service_content.label_tag }}{{ form.service_content }}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form.service_content.label_tag }}
+                    <select name="service_content" class="form-control">
+                        {{ form.service_content }}
+                    </select>
+                </div>
             </div>
-            <div class="col">
-                {{ form.ai_category.label_tag }}{{ form.ai_category }}
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form.ai_category.label_tag }}
+                    <select name="ai_category" class="form-control">
+                        {{ form.ai_category }}
+                    </select>
+                </div>
             </div>
-            <div class="col">
-                {{ form.cost.label_tag }}{{ form.cost }}
+            <div class="col-md-4">
+                <div class="form-group">
+                    {{ form.cost.label_tag }}
+                    <select name="cost" class="form-control">
+                        {{ form.cost }}
+                    </select>
+                </div>
             </div>
-            <div class="col">
-                <button type="submit" class="btn btn-primary">検索</button>
-            </div>
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary btn-lg">検索</button>
         </div>
     </form>
 
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th rowspan="2">企業名</th>
-                <th colspan="{{ all_services|length }}">サービス内容</th>
-                <th colspan="{{ all_categories|length }}">AIカテゴリ</th>
-                <th colspan="{{ all_costs|length }}">コスト</th>
-            </tr>
-            <tr>
-                {% for service in all_services %}
-                <th>{{ service.division }}</th>
+    <div class="table-responsive mt-5">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th rowspan="2" class="align-middle text-center">企業名</th>
+                    <th colspan="{{ all_services|length }}" class="text-center">サービス内容</th>
+                    <th colspan="{{ all_categories|length }}" class="text-center">AIカテゴリ</th>
+                    <th colspan="{{ all_costs|length }}" class="text-center">コスト</th>
+                </tr>
+                <tr>
+                    {% for service in all_services %}
+                    <th class="text-center">{{ service.division }}</th>
+                    {% endfor %}
+                    {% for category in all_categories %}
+                    <th class="text-center">{{ category.genre }}</th>
+                    {% endfor %}
+                    {% for cost in all_costs %}
+                    <th class="text-center">{{ cost.breakdown }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for partner in partners %}
+                <tr>
+                    <td><a href="{% url 'partners:partner_detail' partner.pk %}" class="text-decoration-none">{{ partner.name }}</a></td>
+                    {% for service in all_services %}
+                    <td class="text-center">{% if service in partner.service_content.all %}●{% else %}{% endif %}</td>
+                    {% endfor %}
+                    {% for category in all_categories %}
+                    <td class="text-center">{% if category in partner.ai_category.all %}●{% else %}{% endif %}</td>
+                    {% endfor %}
+                    {% for cost in all_costs %}
+                    <td class="text-center">{% if cost in partner.cost.all %}●{% else %}{% endif %}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
-                {% for category in all_categories %}
-                <th>{{ category.genre }}</th>
-                {% endfor %}
-                {% for cost in all_costs %}
-                <th>{{ cost.breakdown }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for partner in partners %}
-            <tr>
-                <td><a href="{% url 'partners:partner_detail' partner.pk %}">{{ partner.name }}</a></td>
-                {% for service in all_services %}
-                <td>{% if service in partner.service_content.all %}●{% else %}{% endif %}</td>
-                {% endfor %}
-                {% for category in all_categories %}
-                <td>{% if category in partner.ai_category.all %}●{% else %}{% endif %}</td>
-                {% endfor %}
-                {% for cost in all_costs %}
-                <td>{% if cost in partner.cost.all %}●{% else %}{% endif %}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<style>
+    h1.text-center.text-success {
+        color: #00FF00;
+        font-weight: bold;
+    }
+    .table-responsive {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .table-bordered {
+        color: #fff;
+    }
+    .table-dark {
+        background-color: #333;
+    }
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 255, 0, 0.2);
+    }
+    .btn-primary {
+        background-color: #00FF00;
+        border-color: #00FF00;
+        color: #000;
+    }
+    .btn-primary:hover {
+        background-color: #00cc00;
+        border-color: #00cc00;
+    }
+</style>
 {% endblock %}
+
+
 
 
 

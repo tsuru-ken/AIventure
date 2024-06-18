@@ -14,8 +14,7 @@
     </form>
     <div id="image-result" class="text-center mt-4">
         <h2 class="text-success">生成画像</h2>
-        <img id="generated-image" src="" alt="Generated Image" style="display: none; max-width: 50%; height: auto; margin-bottom: 10px; cursor: pointer;">
-        <a id="download-link" href="#" download="generated_image.png" style="display: none" class="btn btn-outline-light">画像を保存</a>
+        <img id="generated-image" src="" alt="Generated Image" style="display: none; max-width: 65%; height: auto; margin-bottom: 10px; cursor: pointer;">
     </div>
     <!-- アーキテクチャ図とAI model情報とAI開発会社を探すのボタン -->
     <div class="text-center mt-4">
@@ -25,6 +24,7 @@
         <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#architectureModal">
             アーキテクチャ図
         </button>
+        <a id="download-link" href="#" download="generated_image.png" style="display: none" class="btn btn-outline-light">画像を保存</a>
     </div>
 </div>
 
@@ -97,6 +97,9 @@
     });
 </script>
 {% endblock %}
+
+
+
 
 
 

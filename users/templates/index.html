@@ -35,6 +35,8 @@
         </p>
     </div>
 </div>
+
+{% if user.is_authenticated %}
 <div class="text-center mt-4">
     <a class="btn btn-outline-primary btn-lg mx-2 ai-link" href="{% url 'ai_models:ai_model_index' %}">
         <i class="fas fa-robot"></i> AIモデル一覧
@@ -43,6 +45,8 @@
         <i class="fas fa-building"></i> AI開発会社一覧
     </a>
 </div>
+{% endif %}
+
 <style>
     .ai-link {
         background-color: transparent; 
@@ -60,6 +64,7 @@
     }
 </style>
 {% endblock %}
+
 
 
 
