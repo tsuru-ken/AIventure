@@ -36,7 +36,12 @@
         <p><a href="#">パスワードを忘れましたか？</a></p>
         <input type="hidden" name="next" value="{% url 'users:index' %}">
     </form>
+    <div class="mt-3">
+        <a href="{% url 'users:guest_login' 'admin' %}" class="btn btn-secondary btn-sm">Admin Guest Login</a>
+        <a href="{% url 'users:guest_login' 'guest' %}" class="btn btn-secondary btn-sm">Guest Login</a>
+    </div>
 </main>
 {% endblock %}
+
 
 

@@ -3,12 +3,14 @@
 {% block title %}TOP Page{% endblock %}
 
 {% block contents %}
-    <h1>TOP Pageへようこそ</h1>
-    <nav>
-        <ul>
-            <li><a href="{% url 'users:signup' %}">Sign Up</a></li>
-            <li><a href="{% url 'users:signup_success' %}">Sign Up Success</a></li>
-        </ul>
-    </nav>
+<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+        <div class="col text-center">
+            <h1>TOP Pageへようこそ</h1>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
 
