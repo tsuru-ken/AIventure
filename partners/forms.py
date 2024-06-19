@@ -46,7 +46,12 @@ class PartnerForm(forms.ModelForm):
     case_study_image = forms.ImageField(required=False)
     
     # 設立日のフィールド
-    established = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    # established = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    established = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date', 'id': 'id_established'})
+    )
+    
+    
 
     class Meta:
         model = Partners
