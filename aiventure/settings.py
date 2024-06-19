@@ -1,23 +1,32 @@
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# プロジェクトのベースディレクトリを構築
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# 環境によって設定を切り替える
+ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'development')  # 環境変数 'DJANGO_ENVIRONMENT' を参照するが、デフォルトは 'development'
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u0a)edlju*nn^%!=i-4fw$kagcsyxeh4ckh54p*9ya1upo*y5v'
+# 開発環境の設定
+if ENVIRONMENT == 'development':
+    # クイックスタート開発設定 - 本番環境には適さない
+    # 詳細は https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/ を参照
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+    # 本番環境では秘密にしておくべきシークレットキー
+    SECRET_KEY = 'django-insecure-u0a)edlju*nn^%!=i-4fw$kagcsyxeh4ckh54p*9ya1upo*y5v'
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['*']
+    # 本番環境ではデバッグを無効にする
+    DEBUG = True
 
-# Application definition
+    # デバッグモードが有効な場合は全てのホストを許可
+    ALLOWED_HOSTS = ['*']
+else:
+    # 本番環境の設定
+    SECRET_KEY = 'your-production-secret-key'  # 本番環境用のシークレットキーに変更
+    DEBUG = False
+    ALLOWED_HOSTS = ['your-domain.com', '57.181.214.237']
 
+# アプリケーション定義
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -61,7 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'aiventure.wsgi.application'
 
-# Database
+# データベース
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
@@ -71,7 +80,7 @@ DATABASES = {
     }
 }
 
-# Password validation
+# パスワード検証
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -89,7 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# 国際化設定
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ja'
@@ -100,30 +109,33 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# 静的ファイル (CSS, JavaScript, 画像) の設定
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+if ENVIRONMENT != 'development':
+    STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Default primary key field type
+# デフォルトのプライマリキーのフィールドタイプ
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom user model
-
+# カスタムユーザーモデル
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # ログイン後にリダイレクトするURLを設定します。
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Media files settings
+# メディアファイルの設定
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 
 # Logging configuration
 # LOGGING = {
