@@ -10,7 +10,7 @@
 * Python 3.12.2+
 * HTML/CSS
 * JavaScript
-* 
+
 ## 使用技術
 ### フレームワーク
 * Django 4.2.7
@@ -18,7 +18,7 @@
 
 ### クラウドサービス
 * AWS
-  ＊ EC2
+  * EC2
   * S3
   * API Gateway
   * Amazon Bedrock
