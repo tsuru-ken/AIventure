@@ -8,7 +8,20 @@
 
 ## 開発言語
 * Python 3.12.2+
+* HTML/CSS
+* JavaScript
+* 
+## 使用技術
+### フレームワーク
 * Django 4.2.7
+* Bootsstrap
+
+### クラウドサービス
+* AWS
+  ＊ EC2
+  * S3
+  * API Gateway
+  * Amazon Bedrock
 
 ## 実行手順
 下記ターミナルで実行
