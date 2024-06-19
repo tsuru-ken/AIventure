@@ -5,7 +5,7 @@
 
 {% block contents %}
 <div class="container mt-5">
-    <h1 class="text-center text-success">Image Generator</h1>
+    <h1 class="text-center ">Image Generator</h1>
     <form id="image-form" method="post" action="{% url 'image_generation:generate_image' %}" class="text-center">
         {% csrf_token %}
         <label for="input-text" class="form-label text-light">生成したい画像の命令</label>
@@ -13,7 +13,7 @@
         <button type="submit" class="btn btn-outline-light">クリック</button>
     </form>
     <div id="image-result" class="text-center mt-4">
-        <h2 class="text-success">生成画像</h2>
+        <h2 class="">生成画像</h2>
         <img id="generated-image" src="" alt="Generated Image" style="display: none; max-width: 65%; height: auto; margin-bottom: 10px; cursor: pointer;">
     </div>
     <!-- アーキテクチャ図とAI model情報とAI開発会社を探すのボタン -->
