@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}パートナー会社詳細{% endblock %}
 
@@ -14,72 +15,78 @@
             {% endif %}
         </div>
         <div class="col-md-9">
-            <h1>{{ partner.name }}</h1>
+            <h1 class="">{{ partner.name }}</h1>
             <div>
-                <h3>サービス概要</h3>
-                <p>{{ partner.service }}</p>
+                <h3 class="text-light">サービス概要</h3>
+                <p class="text-light">{{ partner.service }}</p>
             </div>
         </div>
     </div>
-    <!-- デバッグ用出力 -->
-    <div>
-        <h3>デバッグ用出力</h3>
-        <p>サービス内容: {{ service_content }}</p>
-        <p>AIカテゴリー: {{ ai_category }}</p>
-        <p>コスト: {{ cost }}</p>
-        <p>プロダクト情報: {{ product_info }}</p>
-        <p>ケーススタディ: {{ case_study }}</p>
+
+    <!-- アーキテクチャ図表示ボタン -->
+    <div class="mt-4">
+        <button id="show-architecture-btn" class="btn btn-primary">アーキテクチャ図を表示</button>
     </div>
+
+    <!-- アーキテクチャ図の表示領域 -->
+    <div id="architecture-diagram" class="mt-4" style="display: none;">
+        {% if partner.architecture_diagram %}
+            <img src="{{ partner.architecture_diagram.url }}" alt="アーキテクチャ図" class="img-fluid">
+        {% else %}
+            <p class="text-light">アーキテクチャ図がありません。</p>
+        {% endif %}
+    </div>
+
     <!-- 下部のレイアウト -->
     <div class="row mt-5">
         <div class="col-md-3">
-            <div class="card">
+            <div class="card bg-dark text-light">
                 <div class="card-body">
                     <h4 class="card-title">{{ partner.name }}</h4>
                     <p class="card-text">
                         <strong>所在地:</strong> {{ partner.address }}<br>
-                        <strong>URL:</strong> <a href="{{ partner.url }}" target="_blank">{{ partner.url }}</a><br>
+                        <strong>URL:</strong> <a href="{{ partner.url }}" target="_blank" class="text-warning">{{ partner.url }}</a><br>
                         <strong>設立年:</strong> {{ partner.established.year }}年<br>
                     </p>
                 </div>
             </div>
         </div>
         <div class="col-md-9">
-            <div>
-                <h3>提供サービス</h3>
-                <p style="color: black; background-color: white;">
+            <div class="section">
+                <h3 class="text-light">提供サービス</h3>
+                <div class="p-2 bg-dark text-light">
                     {% for item in service_content %}
-                        <span class="badge badge-secondary" style="color: black;">{{ item.division }}</span>
+                        <span class="badge bg-light text-dark">{{ item.division }}</span>
                     {% empty %}
-                        <span style="color: black;">サービス内容がありません</span>
+                        <span class="text-dark">サービス内容がありません</span>
                     {% endfor %}
-                </p>
+                </div>
             </div>
-            <div>
-                <h3>AIカテゴリー</h3>
-                <p style="color: black; background-color: white;">
+            <div class="section">
+                <h3 class="text-light">AIカテゴリー</h3>
+                <div class="p-2 bg-dark text-light">
                     {% for item in ai_category %}
-                        <span class="badge badge-secondary" style="color: black;">{{ item.genre }}</span>
+                        <span class="badge bg-light text-dark">{{ item.genre }}</span>
                     {% empty %}
-                        <span style="color: black;">AIカテゴリーがありません</span>
+                        <span class="text-dark">AIカテゴリーがありません</span>
                     {% endfor %}
-                </p>
+                </div>
             </div>
-            <div>
-                <h3>コスト感</h3>
-                <p style="color: black; background-color: white;">
+            <div class="section">
+                <h3 class="text-light">コスト感</h3>
+                <div class="p-2 bg-dark text-light">
                     {% for item in cost %}
-                        <span class="badge badge-secondary" style="color: black;">{{ item.breakdown }}</span>
+                        <span class="badge bg-light text-dark">{{ item.breakdown }}</span>
                     {% empty %}
-                        <span style="color: black;">コスト情報がありません</span>
+                        <span class="text-dark">コスト情報がありません</span>
                     {% endfor %}
-                </p>
+                </div>
             </div>
-            <div>
-                <h3>プロダクト情報</h3>
-                <p style="color: black; background-color: white;">
+            <div class="section">
+                <h3 class="text-light">プロダクト情報</h3>
+                <div class="p-2 bg-dark text-light">
                     {% for item in product_info %}
-                        <div>
+                        <div class="mb-3 text-light">
                             <h4>{{ item.name }}</h4>
                             <p>{{ item.content }}</p>
                             {% if item.image %}
@@ -87,15 +94,15 @@
                             {% endif %}
                         </div>
                     {% empty %}
-                        <span style="color: black;">プロダクト情報がありません</span>
+                        <span class="text-dark">プロダクト情報がありません</span>
                     {% endfor %}
-                </p>
+                </div>
             </div>
-            <div>
-                <h3>ケーススタディ</h3>
-                <p style="color: black; background-color: white;">
+            <div class="section">
+                <h3 class="text-light">ケーススタディ</h3>
+                <div class="p-2 bg-dark text-light">
                     {% for item in case_study %}
-                        <div>
+                        <div class="mb-3 text-light">
                             <h4>{{ item.name }}</h4>
                             <p>{{ item.content }}</p>
                             {% if item.image %}
@@ -103,17 +110,76 @@
                             {% endif %}
                         </div>
                     {% empty %}
-                        <span style="color: black;">ケーススタディがありません</span>
+                        <span class="text-dark">ケーススタディがありません</span>
                     {% endfor %}
-                </p>
+                </div>
             </div>
         </div>
     </div>
     <div class="mt-4">
-        <a href="{% url 'partners:index' %}" class="btn btn-secondary">パートナー一覧に戻る</a>
+        <a href="{% url 'partners:index' %}" class="btn btn-back">パートナー一覧に戻る</a>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const showBtn = document.getElementById('show-architecture-btn');
+        const diagram = document.getElementById('architecture-diagram');
+
+        showBtn.addEventListener('click', function() {
+            diagram.style.display = diagram.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+</script>
+
+<style>
+    .text-success {
+        color: #00FF00;
+        font-weight: bold;
+    }
+    .bg-dark {
+        background-color: #333;
+    }
+    .text-light {
+        color: #fff;
+    }
+    .text-warning {
+        color: #ffc107;
+    }
+    .bg-light {
+        background-color: #f8f9fa;
+    }
+    .text-dark {
+        color: #000;
+    }
+    .section {
+        margin-bottom: 20px;
+    }
+    .badge {
+        margin: 2px;
+    }
+    .btn-back {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ccc;
+    }
+    .btn-back:hover {
+        background-color: #00FF00;
+        color: #000;
+    }
+</style>
 {% endblock %}
+
+<!-- Bootstrap JavaScriptの読み込み -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
 
 
 
