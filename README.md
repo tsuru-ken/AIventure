@@ -12,16 +12,24 @@
 * JavaScript
 
 ## 使用技術
+### データベース
+＊　SQlite
+
 ### フレームワーク
 * Django 4.2.7
 * Bootsstrap
 
 ### クラウドサービス
-* AWS
+* AWS(デプロイ用・生成AI用) 
   * EC2
   * S3
   * API Gateway
   * Amazon Bedrock
+
+### その他
+* git
+* github
+
 
 ## 実行手順
 下記ターミナルで実行
