@@ -4,40 +4,60 @@
 
 {% block contents %}
 <div class="container mt-5">
-    <h1>パートナー会社登録</h1>
+    <h1 class="text-center">パートナー会社登録</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
 
-        <div class="form-group">
-            <label for="{{ form.name.id_for_label }}">会社名:</label>
-            {{ form.name }}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">会社名:</label>
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.address.id_for_label }}">住所:</label>
+                    {{ form.address }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.url.id_for_label }}">URL:</label>
+                    {{ form.url }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.established.id_for_label }}">設立:</label>
+                    {{ form.established }}
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="{{ form.logo.id_for_label }}">企業ロゴ:</label>
             {{ form.logo }}
-            <img id="logoPreview" src="#" alt="企業ロゴプレビュー" style="display:none;" />
+            <img id="logoPreview" src="#" alt="企業ロゴプレビュー" style="display:none;" class="img-fluid mt-2" />
         </div>
 
-        <div class="form-group">
-            <label for="{{ form.address.id_for_label }}">住所:</label>
-            {{ form.address }}
-        </div>
-
-        <div class="form-group">
-            <label for="{{ form.url.id_for_label }}">URL:</label>
-            {{ form.url }}
-        </div>
-
-        <div class="form-group">
-            <label for="{{ form.established.id_for_label }}">設立:</label>
-            {{ form.established }}
-        </div>
-
-        <div class="form-group">
-            <label for="{{ form.service.id_for_label }}">サービス概要記載:</label>
-            {{ form.service }}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.service.id_for_label }}">サービス概要記載:</label>
+                    {{ form.service }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ form.provision.id_for_label }}">提供サービス:</label>
+                    {{ form.provision }}
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -45,58 +65,67 @@
             {{ form.engineer }}
         </div>
 
-        <div class="form-group">
-            <label for="{{ form.provision.id_for_label }}">提供サービス:</label>
-            {{ form.provision }}
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="{{ form.service_content.id_for_label }}">サービス内容:</label>
+                    {{ form.service_content }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="{{ form.ai_category.id_for_label }}">AIカテゴリー:</label>
+                    {{ form.ai_category }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="{{ form.cost.id_for_label }}">コスト:</label>
+                    {{ form.cost }}
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="{{ form.service_content.id_for_label }}">サービス内容:</label>
-            {{ form.service_content }}
+        <h3 class="mt-4">製品情報</h3>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="product_info_name">製品名:</label>
+                    <input type="text" name="product_info_name" id="product_info_name" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="product_info_content">製品内容:</label>
+                    <textarea name="product_info_content" id="product_info_content" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="{{ form.ai_category.id_for_label }}">AIカテゴリー:</label>
-            {{ form.ai_category }}
-        </div>
-
-        <div class="form-group">
-            <label for="{{ form.cost.id_for_label }}">コスト:</label>
-            {{ form.cost }}
-        </div>
-
-        <div>
-            <h3>製品情報</h3>
-        </div>
-        <div class="form-group">
-            <label for="product_info_name">製品名:</label>
-            <input type="text" name="product_info_name" id="product_info_name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="product_info_content">製品内容:</label>
-            <textarea name="product_info_content" id="product_info_content" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="product_info_image">製品画像:</label>
             <input type="file" name="product_info_image" id="product_info_image" class="form-control-file">
-            <img id="productImagePreview" src="#" alt="製品画像プレビュー" style="display:none;" />
+            <img id="productImagePreview" src="#" alt="製品画像プレビュー" style="display:none;" class="img-fluid mt-2" />
         </div>
 
-        <div>
-            <h3>ケーススタディ</h3>
+        <h3 class="mt-4">ケーススタディ</h3>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="case_study_name">ケーススタディ名:</label>
+                    <input type="text" name="case_study_name" id="case_study_name" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="case_study_content">ケーススタディ内容:</label>
+                    <textarea name="case_study_content" id="case_study_content" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="case_study_name">ケーススタディ名:</label>
-            <input type="text" name="case_study_name" id="case_study_name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="case_study_content">ケーススタディ内容:</label>
-            <textarea name="case_study_content" id="case_study_content" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="case_study_image">ケーススタディ画像:</label>
             <input type="file" name="case_study_image" id="case_study_image" class="form-control-file">
-            <img id="caseStudyImagePreview" src="#" alt="ケーススタディ画像プレビュー" style="display:none;" />
+            <img id="caseStudyImagePreview" src="#" alt="ケーススタディ画像プレビュー" style="display:none;" class="img-fluid mt-2" />
         </div>
 
         <button type="submit" name="confirm" class="btn btn-primary">確認</button>
@@ -130,7 +159,48 @@
         }
     }
 </script>
+
+<style>
+    h1.text-center {
+        color: #00FF00;
+        font-weight: bold;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .btn-primary {
+        background-color: #00FF00;
+        border-color: #00FF00;
+        color: #000;
+    }
+    .btn-primary:hover {
+        background-color: #00cc00;
+        border-color: #00cc00;
+    }
+    label {
+        color: #fff;
+    }
+    .form-control, .form-control-file {
+        background-color: #333;
+        color: #fff;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

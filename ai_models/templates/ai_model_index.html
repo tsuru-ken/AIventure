@@ -3,8 +3,39 @@
 {% block title %}AI Models Index{% endblock %}
 
 {% block contents %}
+<style>
+    .card {
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+    }
+
+    .card-header {
+        background: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+        color: white;
+    }
+
+    .form-select {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .form-select:focus {
+        border-color: #00FF00;
+        box-shadow: none;
+        color: #00FF00;
+    }
+
+    .form-select option {
+        background: black;
+        color: white;
+    }
+</style>
+
 <div class="container mt-5">
-    <h1>AI カテゴリ画面</h1>
+    <h1 style="color: #00FF00;">AI Models</h1>
     <div class="row">
         <div class="col-md-4">
             <div class="card mb-4">
@@ -73,7 +104,7 @@
             </div>
         </div>
     </div>
-    <p id="debugMessage">JavaScriptが実行されています</p>
+    {% comment %} <p id="debugMessage" style="color: #00FF00;">JavaScriptが実行されています</p> {% endcomment %}
 </div>
 
 <script>
@@ -107,6 +138,7 @@
     });
 </script>
 {% endblock %}
+
 
 
 

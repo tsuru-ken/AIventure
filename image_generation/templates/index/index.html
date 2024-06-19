@@ -1,26 +1,63 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Image Generator{% endblock %}
 
 {% block contents %}
 <div class="container mt-5">
-    <h1>画像生成</h1>
-    <form id="image-form" method="post" action="{% url 'image_generation:generate_image' %}">
+    <h1 class="text-center ">Image Generator</h1>
+    <form id="image-form" method="post" action="{% url 'image_generation:generate_image' %}" class="text-center">
         {% csrf_token %}
-        <label for="input-text">生成したい画像の命令</label>
-        <input type="text" id="input-text" name="input-text" required>
-        <button type="submit">クリック
-        </button>
+        <label for="input-text" class="form-label text-light">生成したい画像の命令</label>
+        <input type="text" id="input-text" name="input-text" required class="form-control d-inline-block w-50 mb-3">
+        <button type="submit" class="btn btn-outline-light">クリック</button>
     </form>
-    {% comment %} 画像生成領域 {% endcomment %}
-    <div id="image-result">
-        <h2>生成画像</h2>
-        {% comment %} 生成された画像を表示するためのイメージタグ {% endcomment %}
-        <img id="generated-image" src="" alt="Generated Image" style="display: none">
+    <div id="image-result" class="text-center mt-4">
+        <h2 class="">生成画像</h2>
+        <img id="generated-image" src="" alt="Generated Image" style="display: none; max-width: 65%; height: auto; margin-bottom: 10px; cursor: pointer;">
+    </div>
+    <!-- アーキテクチャ図とAI model情報とAI開発会社を探すのボタン -->
+    <div class="text-center mt-4">
+        <a href="{% url 'partners:index' %}" class="btn btn-outline-light">AI開発会社を探す</a>
+        <a href="https://ja.stability.ai/" target="_blank" class="btn btn-outline-light">開発会社情報</a>
+        <a href="https://ja.stability.ai/blog/sdxl10" target="_blank" class="btn btn-outline-light">AI model情報</a>
+        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#architectureModal">
+            アーキテクチャ図
+        </button>
+        <a id="download-link" href="#" download="generated_image.png" style="display: none" class="btn btn-outline-light">画像を保存</a>
     </div>
 </div>
 
-{% comment %} JS部分 {% endcomment %}
+<!-- モーダルウィンドウ -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Generated Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modal-image" src="" alt="Generated Image" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- アーキテクチャ図のモーダル -->
+<div class="modal fade" id="architectureModal" tabindex="-1" aria-labelledby="architectureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="architectureModalLabel">アーキテクチャ図</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{% static 'img/image_geneアーキテクチャ図.png' %}" alt="アーキテクチャ図" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.getElementById('image-form').addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -39,22 +76,35 @@
         });
 
         const data = await response.json();
-        console.log('API Response:', data);  // レスポンスをログに出力
+        console.log('API Response:', data);
 
-        // 全体のレスポンスデータをチェック
-        if (data && data.body) {
-            console.log('Response Body:', data.body);  // レスポンスボディをログに出力
-        }
-
-        // presigned_urlを直接取得
-        if (data.body && data.body.presigned_url) {
-            const imageUrl = data.body.presigned_url;
+        if (data.image_path) {
+            const imageUrl = window.location.origin + data.image_path;
             document.getElementById('generated-image').src = imageUrl;
             document.getElementById('generated-image').style.display = 'block';
+            document.getElementById('download-link').href = imageUrl;
+            document.getElementById('download-link').style.display = 'block';
+
+            // モーダル表示のためのイベントリスナーを追加
+            document.getElementById('generated-image').addEventListener('click', function() {
+                document.getElementById('modal-image').src = imageUrl;
+                var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+                imageModal.show();
+            });
         } else {
             console.error('Image URL not found in response:', data);
         }
     });
 </script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
 

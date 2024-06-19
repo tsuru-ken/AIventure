@@ -8,159 +8,181 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.112.5">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.png' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/gif" href="{% static 'assets/vivi.gif' %}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-        .b-example-divider {
-            width: 100%;
-            height: 3rem;
-            background-color: rgba(0, 0, 0, .1);
-            border: solid rgba(0, 0, 0, .15);
-            border-width: 1px 0;
-            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-        }
-        .b-example-vr {
-            flex-shrink: 0;
-            width: 1.5rem;
-            height: 100vh;
-        }
-        .bi {
-            vertical-align: -.125em;
-            fill: currentColor;
-        }
-        .nav-scroller {
-            position: relative;
-            z-index: 2;
-            height: 2.75rem;
-            overflow-y: hidden;
-        }
-        .nav-scroller .nav {
+        body {
             display: flex;
-            flex-wrap: nowrap;
-            padding-bottom: 1rem;
-            margin-top: -1px;
-            overflow-x: auto;
-            text-align: center;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #000; /* 背景を黒に設定 */
+            color: #fff; /* デフォルトの文字色を白に設定 */
+            background-image: url("{% static '/img/back6.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
         }
-        .btn-bd-primary {
-            --bd-violet-bg: #712cf9;
-            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-            --bs-btn-font-weight: 600;
-            --bs-btn-color: var(--bs-white);
-            --bs-btn-bg: var(--bd-violet-bg);
-            --bs-btn-border-color: var(--bd-violet-bg);
-            --bs-btn-hover-color: var(--bs-white);
-            --bs-btn-hover-bg: #6528e0;
-            --bs-btn-hover-border-color: #6528e0;
-            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-            --bs-btn-active-color: var(--bs-btn-hover-color);
-            --bs-btn-active-bg: #5a23c8;
-            --bs-btn-active-border-color: #5a23c8;
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
-        .bd-mode-toggle {
-            z-index: 1500;
+        footer {
+            background-color: #333;
+            color: white; /* フッターの文字色を白に設定 */
+            padding: 10px 0;
+            width: 100%;
+            margin-top: auto;
+        }
+        footer p, footer a {
+            color: white !important; /* フッター内の文字とリンクの色を白に設定 */
+        }
+        footer p a:hover, footer p a:focus, .navbar-brand:hover, .navbar-brand:focus, .nav-item a:hover, .nav-item a:focus, .list-unstyled a:hover, .list-unstyled a:focus {
+            color: #00FF00 !important; /* リンクが選択されたときに緑色に変更 */
+        }
+        main {
+            flex: 1;
+            padding-top: 60px; /* ヘッダーの高さに合わせて調整 */
+            color: #00FF00; /* 文字色を明るい色に設定 */
+        }
+        .navbar-brand strong {
+            font-size: 1.5rem;
+        }
+        .nav-item a {
+            color: white;
+        }
+        .container-main {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 <header data-bs-theme="dark">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{% url 'users:index' %}" class="navbar-brand d-flex align-items-center">
+                <strong>AI Venture</strong>
+            </a>
+            <ul class="nav nav-pills">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ai_models:ai_model_index' %}">AI Models</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'image_generation:generate_image' %}">Image Generation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'partners:index' %}">Partners</a>
+                    </li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
     <div class="collapse text-bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
-                    {% comment %} ヘッダーのタイトルと本文 {% endcomment %}
-                    <h4 class="text-white">お気に入りを見つけよう！</h4>
-                    <p class="text-body-secondary">誰でも参加できる写真投稿サイトです。自分で撮影した写真ならなんでもオッケー！でも、カテゴリに属する写真に限ります。コメントもつけて下さい。</p>
+                    <h4 class="text-white">AIをみんなの手段に</h4>
+                    <p class="text-white">ここから始まる、<span class="text-green">AI</span>の新体験。<br>誰でも手軽に<span class="text-green">AI</span>を使うことができるプラットフォームが生まれました。
+                        <br>『<span class="text-green">AI</span>で何かできないか？』『<span class="text-green">AI</span>で試したいアイデアがる・・・』
+                        <br>ビジネスの最前線で悩むあなたに、ビッタリの場所です。</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4>Contact</h4>
                     <ul class="list-unstyled">
                         {% if user.is_authenticated %}
-                        <li><a href="{% url 'users:signup' %}" class="text-white">マイページ</a></li>
-                        <li><a href="{% url 'users:logout' %}" class="text-white">ログアウト</a></li>
-                        <li><a href="#" class="text-white">パスワードのリセット</a></li>
-                        <li><a href="mailto:admin@example.com" class="text-white">Email me</a></li>
+                            {% if user.is_superuser %}
+                                <li><a href="{% url 'admin:index' %}" class="text-white">Admin Page</a></li>
+                            {% endif %}
+                            <li><a href="{% url 'users:logout' %}" class="text-white">ログアウト</a></li>
+                            <li><a href="#" class="text-white">パスワードのリセット</a></li>
+                            <li><a href="mailto:admin@example.com" class="text-white">Email me</a></li>
                         {% else %}
-                        <li><a href="{% url 'users:signup' %}" class="text-white">サインアップ</a></li>
-                        <li><a href="{% url 'users:login' %}" class="text-white">ログイン</a></li>
-                        <li><a href="mailto:admin@example.com" class="text-white">Email me</a></li>
+                            <li><a href="{% url 'users:signup' %}" class="text-white">サインアップ</a></li>
+                            <li><a href="{% url 'users:login' %}" class="text-white">ログイン</a></li>
+                            <li><a href="mailto:admin@example.com" class="text-white">Email me</a></li>
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    {% comment %} ナビゲーションバー {% endcomment %}
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            {% comment %} トップページのリンク {% endcomment %}
-            <a href="{% url 'users:index' %}" class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                <strong>Photo Gallery</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
 </header>
-
 <main>
-    <div class="container mt-4">
-        <nav>
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:index' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ai_models:ai_model_index' %}">AI Models</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'image_generation:generate_image' %}">Image Generation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'partners:index' %}">Partners</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:login' %}">Login</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="container container-main">
+        {% block contents %} {% endblock %}
     </div>
-    {% block contents %} {% endblock %}
 </main>
-
-<footer class="text-body-secondary py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
+<footer class="text-body-secondary py-3 mt-auto">
+    <div class="container d-flex justify-content-between align-items-center">
+        <p class="mb-1 mx-auto">AI Venture &copy;</p>
+        <p class="mb-1">
+            <a href="#" class="float-end">Back to top</a>
         </p>
-        {% comment %} フッターのテキストを任意のものに書き換え {% endcomment %}
-        <p class="mb-1">Album example is &copy; Bootstrap, but please post a lot</p>
     </div>
 </footer>
-
-{% comment %} BootstrapからJavaScriptを読み込むコードをコピーして貼り付け {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggler = document.querySelector('.navbar-toggler');
+        const collapse = document.querySelector('#navbarHeader');
+        const navbarLinks = document.querySelectorAll('.nav-link');
 
+        toggler.addEventListener('click', function() {
+            collapse.classList.toggle('show');
+        });
+
+        navbarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (collapse.classList.contains('show')) {
+                    collapse.classList.remove('show');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
