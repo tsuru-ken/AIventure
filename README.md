@@ -11,7 +11,7 @@
 ## 実行手順
 下記ターミナルで実行
 
-・・・
+```
 $ git clone git@github.com:tsuru-ken/AIventure.git
 $ cd AIventure
 $ python -m venv env
@@ -20,7 +20,7 @@ $ pip install -r requirements.txt
 $ python manage.py migrate
 $ python manage.py loaddata initial_data.json  # またはカスタムスクリプト `python manage.py shell < seed_data.py`
 $ python manage.py runserver
-・・・
+```
 
 ## カタログ設計, テーブル設計
 https://docs.google.com/spreadsheets/d/1MqlPDyp3nqfJNQOZeujCLLJ-UnkzQBSswSWR4RiOUgA/edit?gid=1347183152#gid=1347183152
