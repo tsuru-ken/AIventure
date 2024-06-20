@@ -20,11 +20,12 @@
 * Bootsstrap
 
 ### クラウドサービス
-* AWS(デプロイ用・生成AI用) 
+* AWS(デプロイ用1・生成AI用) 
   * EC2
   * S3
   * API Gateway
   * Amazon Bedrock
+* Microsoft Azure（アジュール）(デプロイ用2) 
 
 ### その他
 * git
